@@ -310,8 +310,14 @@ class Game
   def get_card(player, card_valid)
     puts ''
     puts '----------------------------------------------------------------------------------------'
-    puts 'Digite el id de la carta a lanzar'
-    card_id = gets.chomp.to_s
+    puts 'Digite el id de la carta a lanzar o digite canto'
+    input_usr = gets.chomp.to_s
+    if input_usr == 'canto'
+      puts 'Digito canto'
+    else
+      puts 'Digito una carta'
+      card_id = input_usr
+    end
     card = search_card(player, card_id)
     if !card.nil?
       player.card_thrown = card
