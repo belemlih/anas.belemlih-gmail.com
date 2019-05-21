@@ -7,7 +7,11 @@ class Game
   # players: Se almacenran los jugadores
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
-  attr_accessor :cards, :players, :cards_thrown, :trump_card
+  # glasses_canto: Valida si el canto se hizo con copas
+  # club_canto: Valida si el canto se hizo con bastos
+  # swords_false: Valida si el canto se hizo con espadas
+  # golds_canto: Valida si el canto se hizo con oros
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :glasses_canto, :club_canto, :swords_false, :golds_canto
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -15,6 +19,10 @@ class Game
     @cards = []
     @players = []
     @cards_thrown = []
+    @glasses_canto = false
+    @club_canto = false
+    @swords_false = false
+    @golds_canto = false
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
     cards_data.each do |data|
@@ -314,22 +322,31 @@ class Game
     input_usr = gets.chomp.to_s
     if input_usr == 'canto'
       puts 'Digito canto'
+      validate_canto(player)
+      card_valid = true
+      card_valid
     else
       puts 'Digito una carta'
       card_id = input_usr
-    end
-    card = search_card(player, card_id)
-    if !card.nil?
-      player.card_thrown = card
-      @cards_thrown.push(player.card_thrown)
-      (0..player.cards.length - 1).each do |i|
-        player.cards.delete_at(i) if player.cards[i] == card
+      card = search_card(player, card_id)
+      if !card.nil?
+        player.card_thrown = card
+        @cards_thrown.push(player.card_thrown)
+        (0..player.cards.length - 1).each do |i|
+          player.cards.delete_at(i) if player.cards[i] == card
+        end
+        card_valid = false
+      else
+        puts 'Id no valido'
       end
-      card_valid = false
-    else
-      puts 'Id no valido'
     end
     card_valid
+  end
+
+  def validate_canto(player)
+    player.cards.each do |card|
+      #Comparar uno por uno
+    end
   end
 
   # save_card: Se guardan las cartas en el array cards
