@@ -9,9 +9,9 @@ class Game
   # trump_card: Carta del triunfo
   # glasses_canto: Valida si el canto se hizo con copas
   # club_canto: Valida si el canto se hizo con bastos
-  # swords_false: Valida si el canto se hizo con espadas
+  # swords_canto: Valida si el canto se hizo con espadas
   # golds_canto: Valida si el canto se hizo con oros
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :glasses_canto, :club_canto, :swords_false, :golds_canto
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :glasses_canto, :club_canto, :swords_canto, :golds_canto
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -21,7 +21,7 @@ class Game
     @cards_thrown = []
     @glasses_canto = false
     @club_canto = false
-    @swords_false = false
+    @swords_canto = false
     @golds_canto = false
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
@@ -322,9 +322,13 @@ class Game
     input_usr = gets.chomp.to_s
     if input_usr == 'canto'
       puts 'Digito canto'
-      validate_canto(player)
-      card_valid = true
-      card_valid
+      if validate_canto(player)
+        puts 'Canto Valido: +20pts'
+      else
+        puts 'Canto no valido'
+        card_valid = true
+        card_valid
+      end
     else
       puts 'Digito una carta'
       card_id = input_usr
@@ -344,9 +348,29 @@ class Game
   end
 
   def validate_canto(player)
-    player.cards.each do |card|
-      #Comparar uno por uno
+    validCanto = false
+    cantoCount = 0
+    if glasses_canto && golds_canto && swords_canto && club_canto
+      puts 'Ya se hicieron todos los cantos posibles'
+    else
+      player.cards.each do |card|
+        cantoCount += cards_verify(card).to_i
+        if cantoCount == 2
+          glasses_canto = true
+          validCanto = true
+        else
+          validCanto = false
+        end
+      end
     end
+    validCanto
+  end
+
+  def cards_verify(card)
+    if card.id == '11glasses' || card.id == '12glasses'
+      count = 1
+    end
+    count
   end
 
   # save_card: Se guardan las cartas en el array cards
