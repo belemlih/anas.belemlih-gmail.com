@@ -326,7 +326,6 @@ class Game
         puts 'Canto Valido: +20pts'
       else
         puts 'Canto no valido'
-        card_valid = true
         card_valid
       end
     else
@@ -349,25 +348,60 @@ class Game
 
   def validate_canto(player)
     validCanto = false
-    cantoCount = 0
+    cantoCountGlasses = 0
+    cantoCountClub = 0
+    cantoCountSwords = 0
+    cantoCountGold = 0
     if glasses_canto && golds_canto && swords_canto && club_canto
       puts 'Ya se hicieron todos los cantos posibles'
+      validCanto = false
     else
       player.cards.each do |card|
-        cantoCount += cards_verify(card).to_i
-        if cantoCount == 2
+        cantoCountGlasses += cards_verifyGlasses(card).to_i
+        cantoCountClub += cards_verifyClub(card).to_i
+        cantoCountSwords += cards_verifySwords(card).to_i
+        cantoCountGold += cards_verifyGold(card).to_i
+        if cantoCountGlasses == 2 
           glasses_canto = true
           validCanto = true
-        else
-          validCanto = false
+        elsif cantoCountClub == 2
+          club_canto = true
+          validCanto = true
+          elsif cantoCountSwords == 2
+            swords_canto = true
+            validCanto = true
+            elsif cantoCountGold == 2
+              golds_canto = true
+              validCanto = true
         end
       end
     end
     validCanto
   end
 
-  def cards_verify(card)
+  def cards_verifyGlasses(card)
     if card.id == '11glasses' || card.id == '12glasses'
+      count = 1
+    end
+    count
+  end
+
+  def cards_verifyClub(card)
+    if card.id == '11club' || card.id == '12club'
+      count = 1
+    end
+    count
+  end
+
+  def cards_verifySwords(card)
+    if card.id == '11swords' || card.id == '12swords'
+      count = 1
+    end
+    count
+  end
+
+  def cards_verifyGold(card)
+    if card.id == '11gold' || card.id == '12gold'
       count = 1
     end
     count
