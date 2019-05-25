@@ -9,7 +9,7 @@ class Game
   # players: Se almacenran los jugadores
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
-  attr_accessor :cards, :players, :cards_thrown, :trump_card , :player1 , :machine,:machine1,:machine2,:machine3
+  attr_accessor :cards, :players, :cards_thrown, :trump_card , :machine,:machine1,:machine2,:machine3, :aux ,:aux1,:aux2
   # se inicializa la raiz del arbol
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -17,6 +17,9 @@ class Game
     @cards = []
     @players = []
     @cards_thrown = []
+    @aux=[]
+    @aux1=[]
+    @aux2=[]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
     cards_data.each do |data|
@@ -34,11 +37,13 @@ class Game
     end
   end
 
+  #definicion del nodo raiz o padre
   def machine
-    @machine=Tree.new(0,0)
-    @machine1=Tree.new(0,0)
-    @machine2=Tree.new(0,0)
-    @machine3=Tree.new(0,0)
+    @machine=Tree.new(0,0,0)
+    @machine1=Tree.new(0,0,0)
+    @machine2=Tree.new(0,0,0)
+    @machine3=Tree.new(0,0,0)
+    @machine.value=""
   end
 
   # create_player: Agrega un jugador a la lista de jugadores
@@ -61,8 +66,9 @@ class Game
 
         if(player.id.to_i==1)
         elsif(player.id.to_i==2)
-          @machine.children() << Tree.new(card.value.to_s,card.type.to_s)
-          #          puts @machine.children[0].type.to_s
+          @machine.children() << Tree.new(card.value.to_s,card.type.to_s,card.number.to_s)
+          # puts @machine.children[0].number.to_s
+          #puts card.number.to_s
         elsif(player.id.to_i==3)
 
         elsif(player.id.to_i==4)
@@ -77,22 +83,26 @@ class Game
   end
 
   #metodo que ordena los nodos cuando alguno es eliminado
-  def order_tree(value)
+  def delete_node(value,card)
 
-    (0..t.children().length-1).each do |i|
+    (0..value.children().length-1).each do |i|
 
-      if (t.children[i].value.to_s=="")
+      if ((value.children[i].number.to_s+""+value.children[i].type.to_s)==card.to_s)
+        value.children[i].value=""
+        value.children[i].type=""
+        value.children[i].number=""
 
-        (i..t.children().length).each do |j|
-          if(j+1<t.children().length)
-            aux=t.children[j+1].value.to_s
-            t.children[j+1].value=t.children[j].value.to_s
-            t.children[j].value=aux
+        (i..value.children().length).each do |j|
+          if(j+1<value.children().length)
+            aux=value.children[j+1]
+            value.children[j+1]=value.children[j]
+            value.children[j]=aux
           end
         end
 
       end
-      puts t.children[i].value.to_s
+      # puts "valor"+value.children[i].value.to_s+"etiqueta"+value.children[i].number.to_s+" "+value.children[i].type.to_s
+
     end
   end
 
@@ -206,6 +216,7 @@ class Game
     card_win = @players[num_player_start].card_thrown
     while cont <= (@players.length - 1)
       card = @players[cont].card_thrown
+      puts "cartas lanzadaas"+card.type.to_s
       if card_win != card
         if card.type.to_s == @trump_card.type.to_s || card_win.type.to_s == @trump_card.type.to_s
           aux_card = validate_card_with_trump(card, card_win)
@@ -361,51 +372,259 @@ class Game
   def get_card(player, card_valid)
     puts ''
     puts '----------------------------------------------------------------------------------------'
-    puts 'Digite el id de la carta a lanzar'
 
-    puts "player"+player.id.to_s
     #condicional para validar la opcion a elejir por la maquina
     if(player.id.to_i==2)
-
-      min_max
-    end
-    card_id = gets.chomp.to_s
-    card = search_card(player, card_id)
-    if !card.nil?
-      player.card_thrown = card
-      @cards_thrown.push(player.card_thrown)
-      (0..player.cards.length - 1).each do |i|
-        player.cards.delete_at(i) if player.cards[i] == card
+      puts 'Carta lanzada por la maquina'
+      puts "player"+player.id.to_s
+      card_id=min_max
+      puts  "valor maquina"+card_id.to_s
+      card = search_card(player, card_id)
+      if !card.nil?
+        delete_node(@machine,card_id)
+        player.card_thrown = card
+        @cards_thrown.push(player.card_thrown)
+        (0..player.cards.length - 1).each do |i|
+          player.cards.delete_at(i) if player.cards[i] == card
+        end
+        card_valid = false
+      else
+        puts 'Id no valido'
       end
-      card_valid = false
+      card_valid
+
     else
-      puts 'Id no valido'
+      puts 'Digite el id de la carta a lanzar'
+      puts "player"+player.id.to_s
+      card_id = gets.chomp.to_s
+      puts "id de la carta"+card_id
+      card = search_card(player, card_id)
+      if !card.nil?
+        player.card_thrown = card
+        @cards_thrown.push(player.card_thrown)
+        (0..player.cards.length - 1).each do |i|
+          player.cards.delete_at(i) if player.cards[i] == card
+        end
+        card_valid = false
+      else
+        puts 'Id no valido'
+      end
+      card_valid
     end
-    card_valid
+
   end
 
   def min_max
     #se añade el valor del palo del triunfo a la raiz
-    @machine.value= @trump_card.number
-    @machine.type= @trump_card.type
+    if(@machine.value.to_s=="")
+      @machine.value= @trump_card.number
+      @machine.type= @trump_card.type
+    end
+    puts "cartas restantes"+@players[1].cards.length.to_s
+    if(@players[1].cards.length==1)
+      #(0..@machine.children.length-1).each do |i|
 
-    (0..cards_thrown.length-1).each do |j|
-      puts "cartas lanzadas"+@cards_thrown[j].type
+      #  puts "carta"+i.to_s+""+@machine.children[0].number.to_s+""+@machine.children[0].type.to_s
+      #end
+      return  @machine.children[0].number.to_s+""+@machine.children[0].type.to_s
+    end
+    # if(@player.cards.length==1)
+    #  puts "ultima ronda"
+    #end
+    @aux.clear
+    @aux1.clear
+    #si ya existen cartas en la mesa
+    if @cards_thrown.length>0
+      #obtener las cartas que sean del palo de triunfo pero que sean de mayor valor y numero que las arrojadas
+      (0..@machine.children.length-1).each do |i|
+        if (@machine.children[i].type==@machine.type)
 
-      (0..@machine.children().length-1).each do |i|
-        
-        
-        if(@machine.children[i].type.to_s==@machine.type.to_s)
-        puts @machine.children[i].type.to_s
+          if (@machine.children[i].value.to_i==11||@machine.children[i].value.to_i==10||
+          @machine.children[i].value.to_i==2||@machine.children[i].value.to_i==3||@machine.children[i].value.to_i==4&&
+          @machine.children[i].number.to_s!="")
+            count=0
+            (0..@cards_thrown.length-1).each do |j|
+              if (@machine.children[i].value.to_i>@cards_thrown[j].value.to_i &&
+              @cards_thrown[j].type.to_s==@machine.type.to_s&&@machine.children[i].number.to_s!="")
+                count+=1
 
+              end
+            end
+            if(count==@cards_thrown.length)
+              @aux << @machine.children[i]
+            end
+          elsif(@machine.children[i].number.to_i!=1&&@machine.children[i].number.to_i!=3&&@machine.children[i].number.to_i!=11&&
+          @machine.children[i].number.to_i!=12&&@machine.children[i].number.to_i!=13&&@machine.children[i].number.to_s!="")
+            count=0
+            (0..@cards_thrown.length-1).each do |j|
+              #  puts "valores del palo  lanzado2"+@cards_thrown[j].value.to_s
+
+              if(@machine.children[i].number.to_i>@cards_thrown[j].number.to_i &&
+              @cards_thrown[j].type.to_s==@machine.type.to_s&&@machine.children[i].number.to_s!="")
+                count+=1
+              end
+              #   puts "contador2"+count.to_s
+            end
+            if(count==@cards_thrown.length)
+              @aux << @machine.children[i]
+            end
+          end
         end
-        
-            
       end
 
+      #obtener las cartas que sean del palo del primer lanzamiento, pero que sean mayores que las demas
+      (0..@machine.children.length-1).each do |i|
+        if (@machine.children[i].type.to_s==@cards_thrown[0].type.to_s)
+          if (@machine.children[i].value.to_i==11||@machine.children[i].value.to_i==10||
+          @machine.children[i].value.to_i==2||@machine.children[i].value.to_i==3||@machine.children[i].value.to_i==4&&
+          @machine.children[i].number.to_s!="")
+            count=0
+
+            (0..@cards_thrown.length-1).each do |j|
+              if (@machine.children[i].value.to_i>@cards_thrown[j].value.to_i &&
+              @cards_thrown[j].type.to_s==@cards_thrown[0].type.to_s&&@machine.children[i].number.to_s!="")
+                count+=1
+              end
+            end
+            if(count==@cards_thrown.length)
+              @aux1 << @machine.children[i]
+            end
+          elsif(@machine.children[i].number.to_i!=1&&@machine.children[i].number.to_i!=3&&@machine.children[i].number.to_i!=11&&
+          @machine.children[i].number.to_i!=12&&@machine.children[i].number.to_i!=13&&@machine.children[i].number.to_s!="")
+            count=0
+            (0..@cards_thrown.length-1).each do |j|
+              puts "cartas lanzadas metodo fail"+@cards_thrown[j].type.to_s
+              if(@machine.children[i].number.to_i>@cards_thrown[j].number.to_i &&
+              @cards_thrown[j].type.to_s==
+              @cards_thrown[0].type.to_s)
+                count+=1
+              end
+            end
+            if(count==@cards_thrown.length)
+              @aux1 << @machine.children[i]
+            end
+          end
+        end
+      end
+      # puts "entrando al metodo validando datos"+@aux.length.to_s+"otro valor"+@aux1.length.to_s
+
+      if(@aux.length>0)
+        sort_array(@aux,0)
+        return  @aux[0].number.to_s+""+@aux[0].type.to_s
+
+      elsif(@aux1.length>0)
+        sort_array(@aux1,0)
+        return  @aux1[0].number.to_s+""+@aux1[0].type.to_s
+      else
+        #entra a este condicional cundo la maquina no tiene una carta con la cual pueda ganar la ronda
+        @aux.clear
+        @aux1.clear
+        #se arroja la carte de menor valor diferente del palo de triunfo
+        (0..@machine.children().length-1).each do |j|
+          if @machine.children[j].type.to_s!=@machine.type.to_s&&@machine.children[j].number.to_s!=""
+            @aux<<@machine.children[j]
+            #return @machine.children[j].number.to_s+""+@machine.children[j].type.to_s
+          end
+        end
+        if(@aux.length>0)
+          #me ordena el mazo auxiliar con respecto valor de la carta sin tener en cuenta el numero
+          sort_array(@aux,0)
+          return @aux[0].number.to_s+""+@aux[0].type.to_s
+        else
+          @aux.clear
+          #arrojar una carta con valor el menor valor del mazo de la maquna
+          (0..@machine.children().length-1).each do |j|
+            @aux <<@machine.children[j]
+          end
+          sort_array(@aux,0)
+          return @aux[0].number.to_s+""+@aux[0].type.to_s
+        end
+      end
+
+    else
+      #Condicional que se aplica cuando la maquina va a lanzar de primeras
+
+      @aux.clear
+      @aux1.clear
+      puts "entrando a valores"
+      (0..@machine.children().length-1).each do |j|
+        #rellenamos el arreglo auxiliar con los valores de las cartas iguales a 0 pero que no sean del palo de triunfu
+        if  (@machine.children[j].value.to_i==0 && @machine.children[j].type.to_s!=@machine.type.to_s&&@machine.children[j].number.to_s!="")
+          puts "entradas"+@machine.children[j].number.to_s+""+@machine.children[j].type.to_s
+          @aux <<@machine.children[j]
+        end
+      end
+
+      if(@aux.length==0)
+        #si no encuentra una carta de valor 0 diferente del mazo arrojara la que tiene menor valor
+        @aux.clear
+        (0..@machine.children().length-1).each do |j|
+          #rellenamos el arreglo auxiliar con los valores de las cartas iguales a 0 pero que no sean del palo de triunfu
+          if  (@machine.children[j].value.to_i!=0 && @machine.children[j].type.to_s!=@machine.type.to_s&&@machine.children[j].type.to_s!="")
+            @aux <<@machine.children[j]
+          end
+        end
+
+        if(@aux.length>0)
+          # puts "valores escogidos1"+ @aux[0].number.to_s+""+@aux[0].type.to_s
+
+          sort_array(@aux,0)
+          return  @aux[0].number.to_s+""+@aux[0].type.to_s
+        else
+          puts "ultima entrada"
+          @aux.clear
+          (0..@machine.children().length-1).each do |j|
+            @aux <<@machine.children[j]
+          end
+          sort_array(@aux,0)
+          # puts "valores escogidos2"+ @aux[0].number.to_s+""+@aux[0].type.to_s
+
+          return  @aux[0].number.to_s+""+@aux[0].type.to_s
+        end
+      else
+        sort_array(@aux,1)
+        # puts "valores escogidos3 valores que son 0 pero de otro mazo"
+        #  (0..@machine.children().length-1).each do |j|
+        #     puts "valores >>>>"+ @aux[j].number.to_s+""+@aux[j].type.to_s
+        #   end
+        #puts "valores escogidos3"+ @aux[0].number.to_s+""+@aux[0].type.to_s
+        return  @aux[0].number.to_s+""+@aux[0].type.to_s
+        #puts "resuldato"+@aux[0].type.to_s
+      end
     end
 
     #@cards_thrown[] cartas arrojadas previamente
+  end
+
+  #metodo para ordenar arreglos por valor de la carta y numero
+  def sort_array(array,opc)
+    aux_sort=0
+
+    if(opc==0)
+
+      (0..array.length-1).each do |j|
+
+        (1..array.length-1).each do |i|
+          if array[i-1].value.to_i > array[i].value.to_i
+            aux_sort = array[i - 1];
+            array[i - 1] = array[i];
+            array[i] = aux_sort;
+          end
+        end
+      end
+    elsif(opc==1)
+
+      (0..array.length-1).each do |j|
+
+        (1..array.length-1).each do |i|
+          if array[i-1].number.to_i > array[i].number.to_i
+            aux_sort = array[i - 1];
+            array[i - 1] = array[i];
+            array[i] = aux_sort;
+          end
+        end
+      end
+    end
   end
 
   # save_card: Se guardan las cartas en el array cards
@@ -433,7 +652,7 @@ game = Game.new
   name = gets.chomp
   game.create_player(i.to_s,name.to_s)
 end
-root=Tree.new(0,0)
+root=Tree.new(0,0,0)
 #game.throw_card_player(1)
 
 #game.show_players()
