@@ -1,5 +1,6 @@
 require_relative 'Card.rb'
 require_relative 'Player.rb'
+require_relative 'Canto.rb'
 require 'json'
 class Game
   # Se crean las variables de clase
@@ -11,7 +12,7 @@ class Game
   # club_canto: Valida si el canto se hizo con bastos
   # swords_canto: Valida si el canto se hizo con espadas
   # golds_canto: Valida si el canto se hizo con oros
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :glasses_canto, :club_canto, :swords_canto, :golds_canto
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :glasses_canto, :club_canto, :swords_canto, :golds_canto, :type_cards
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -23,6 +24,7 @@ class Game
     @club_canto = false
     @swords_canto = false
     @golds_canto = false
+    @type_cards = [Canto.new('glasses',false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
     cards_data.each do |data|
@@ -96,9 +98,9 @@ class Game
   # who_win: Recorre el array de players y dentro,
   # recorre el array de cartas ganadas de cada jugador
   # haciendo la suma de las cartas ganadas guardando el resultado
-  # en la variable de poinst de cada jugador,
+  # en la variable de points de cada jugador,
   # Una vez finalizado ordena el array de players de mayor
-  # a menor con la variable poinst, se selecciona el primer player
+  # a menor con la variable points, se selecciona el primer player
   # y se muestran los datos del nombre y los puntos del jugador ganador
   # despues se listan los jugadores con sus cartas
   def who_win
@@ -111,13 +113,13 @@ class Game
     end
     players_win = @players.sort_by(&:points).reverse![0]
     puts 'GANADOR--------GANADOR---------GANADOR----'
-    puts "Nombre: #{players_win.name} || Puntos: #{players_win.points}"
+    puts "Nombre: #{players_win.name}"
     #players_win.cards_wins.each do |cards|
     #  puts cards.id
     #end
     @players.each do |player|
       puts ''
-      puts player.name
+      puts "Nombre: #{player.name} || Puntos: #{player.points}"
       puts 'Cartas: '
       player.cards_wins.each do |cards|
         print "#{cards.id}"
@@ -319,17 +321,14 @@ class Game
     puts ''
     puts '----------------------------------------------------------------------------------------'
     puts 'Digite el id de la carta a lanzar o digite canto'
-    input_usr = gets.chomp.to_s
+    input_usr = gets.chomp
     if input_usr == 'canto'
-      puts 'Digito canto'
       if validate_canto(player)
-        puts 'Canto Valido: +20pts'
+        card_valid
       else
-        puts 'Canto no valido'
         card_valid
       end
     else
-      puts 'Digito una carta'
       card_id = input_usr
       card = search_card(player, card_id)
       if !card.nil?
@@ -347,131 +346,38 @@ class Game
   end
 
   def validate_canto(player)
-    validCanto = false
-    cantoCountGlasses = 0
-    cantoCountClub = 0
-    cantoCountSwords = 0
-    cantoCountGold = 0
+    valid_canto = false
     if glasses_canto && golds_canto && swords_canto && club_canto
       puts 'Ya se hicieron todos los cantos posibles'
-      validCanto = false
+      valid_canto = false
     else
-      puts "Canto Glass Antes #{glasses_canto}"
-      puts "Canto Club Antes #{club_canto}"
-      puts "Canto Swords Antes #{swords_canto}"
-      puts "Canto Golds Antes #{golds_canto}"
-      player.cards.each do |card|
-        if(card.type == 'glasses')
-          cantoCountGlasses += cards_verifyGlasses(card).to_i
-          if validate_glass_canto(card, cantoCountGlasses)
-            validCanto = true
-          end
-        end
-        if(card.type == 'club')
-          cantoCountClub += cards_verifyClub(card).to_i
-          if validate_club_canto(card, cantoCountClub)
-          validCanto = true
-          end
-        end
-        if(card.type == 'swords')
-          cantoCountSwords += cards_verifySwords(card).to_i
-          if validate_swords_canto(card, cantoCountSwords)
-          validCanto = true
-          end
-        end
-        if(card.type == 'golds')
-          cantoCountGold += cards_verifyGold(card).to_i
-          if validate_golds_canto(card, cantoCountGold)
-          validCanto = true
+      @type_cards.each do |canto|
+        count_cantos = 0
+        player.cards.each do |card|
+          type_card = card.type
+          if canto.type == type_card
+            if card.number == '11' || card.number == '12'
+              count_cantos += 1
+              if count_cantos == 2
+                if canto.status == false
+                  valid_canto = true
+                  canto.status = true
+                  puts "Canto #{type_card} Valido: +20pts"
+                  player.points += 20
+                  return valid_canto
+                else
+                  puts "El canto #{canto.type} ya se hizo"
+                  return valid_canto
+                end
+              end
+            end
           end
         end
       end
+      puts 'Canto no valido, no tiene las cartas necesarias'
+      return valid_canto
     end
-    puts "Canto Glass Despues #{glasses_canto}"
-    puts "Canto Club Despues #{club_canto}"
-    puts "Canto Swords Despues #{swords_canto}"
-    puts "Canto Golds Despues #{golds_canto}"
-    validCanto
-  end
-
-  def validate_glass_canto(card, count)
-    validate = false
-    if count == 2
-      if glasses_canto == false
-        @glasses_canto = true
-        validate = true
-        validate
-      else
-
-      end
-    end
-  end
-
-  def validate_club_canto(card, count)
-    validate = false
-    if count == 2
-      if club_canto == false
-        @club_canto = true
-        validate = true
-        validate
-      else
-
-      end
-    end
-  end
-
-  def validate_swords_canto(card, count)
-    validate = false
-    if count == 2
-      if swords_canto == false
-        @swords_canto = true
-        validate = true
-        validate
-      else
-
-      end
-    end
-  end
-
-  def validate_golds_canto(cardo, count)
-    validate = false
-    if count == 2
-      if golds_canto == false
-        @golds_canto = true
-        validate = true
-        validate
-      else
-
-      end
-    end
-  end
-
-  def cards_verifyGlasses(card)
-    if card.id == '11glasses' || card.id == '12glasses'
-      count = 1
-    end
-    count
-  end
-
-  def cards_verifyClub(card)
-    if card.id == '11club' || card.id == '12club'
-      count = 1
-    end
-    count
-  end
-
-  def cards_verifySwords(card)
-    if card.id == '11swords' || card.id == '12swords'
-      count = 1
-    end
-    count
-  end
-
-  def cards_verifyGold(card)
-    if card.id == '11golds' || card.id == '12golds'
-      count = 1
-    end
-    count
+    valid_canto
   end
 
   # save_card: Se guardan las cartas en el array cards
