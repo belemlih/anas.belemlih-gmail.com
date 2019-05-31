@@ -452,6 +452,7 @@ class Game
             end
             if(count==@cards_thrown.length)
               @aux << @machine.children[i]
+              puts "Conditional 1"+@machine.children[i].type.to_s
             end
           elsif(@machine.children[i].number.to_i!=1&&@machine.children[i].number.to_i!=3&&@machine.children[i].number.to_i!=11&&
           @machine.children[i].number.to_i!=12&&@machine.children[i].number.to_i!=13&&@machine.children[i].number.to_s!="")
@@ -467,6 +468,7 @@ class Game
             end
             if(count==@cards_thrown.length)
               @aux << @machine.children[i]
+              puts "Conditional 2"+@machine.children[i].type.to_s
             end
           end
         end
@@ -488,6 +490,8 @@ class Game
             end
             if(count==@cards_thrown.length)
               @aux1 << @machine.children[i]
+              puts "Conditional 3"+@machine.children[i].type.to_s
+
             end
           elsif(@machine.children[i].number.to_i!=1&&@machine.children[i].number.to_i!=3&&@machine.children[i].number.to_i!=11&&
           @machine.children[i].number.to_i!=12&&@machine.children[i].number.to_i!=13&&@machine.children[i].number.to_s!="")
@@ -502,6 +506,8 @@ class Game
             end
             if(count==@cards_thrown.length)
               @aux1 << @machine.children[i]
+              puts "Conditional 4"+@machine.children[i].type.to_s
+
             end
           end
         end
@@ -510,16 +516,20 @@ class Game
 
       if(@aux.length>0)
         sort_array(@aux,0)
+        puts "Conditional 74"+@aux[0].number.to_s+""+@aux[0].type.to_s
+
         return  @aux[0].number.to_s+""+@aux[0].type.to_s
 
       elsif(@aux1.length>0)
         sort_array(@aux1,0)
+        puts "Conditional 73"+@aux1[0].number.to_s+""+@aux1[0].type.to_s
+
         return  @aux1[0].number.to_s+""+@aux1[0].type.to_s
       else
         #entra a este condicional cundo la maquina no tiene una carta con la cual pueda ganar la ronda
         @aux.clear
         @aux1.clear
-        #se arroja la carte de menor valor diferente del palo de triunfo
+        #se arroja la carta de menor valor diferente del palo de triunfo
         (0..@machine.children().length-1).each do |j|
           if @machine.children[j].type.to_s!=@machine.type.to_s&&@machine.children[j].number.to_s!=""
             @aux<<@machine.children[j]
@@ -529,6 +539,8 @@ class Game
         if(@aux.length>0)
           #me ordena el mazo auxiliar con respecto valor de la carta sin tener en cuenta el numero
           sort_array(@aux,0)
+          puts "Conditional 72"+@aux[0].number.to_s+""+@aux[0].type.to_s
+
           return @aux[0].number.to_s+""+@aux[0].type.to_s
         else
           @aux.clear
@@ -537,7 +549,10 @@ class Game
             @aux <<@machine.children[j]
           end
           sort_array(@aux,0)
+          puts "Conditional 71"+@aux[0].number.to_s+""+@aux[0].type.to_s
+
           return @aux[0].number.to_s+""+@aux[0].type.to_s
+
         end
       end
 
@@ -552,6 +567,8 @@ class Game
         if  (@machine.children[j].value.to_i==0 && @machine.children[j].type.to_s!=@machine.type.to_s&&@machine.children[j].number.to_s!="")
           puts "entradas"+@machine.children[j].number.to_s+""+@machine.children[j].type.to_s
           @aux <<@machine.children[j]
+          puts "Conditional 5"+@machine.children[j].type.to_s
+
         end
       end
 
@@ -562,22 +579,32 @@ class Game
           #rellenamos el arreglo auxiliar con los valores de las cartas iguales a 0 pero que no sean del palo de triunfu
           if  (@machine.children[j].value.to_i!=0 && @machine.children[j].type.to_s!=@machine.type.to_s&&@machine.children[j].type.to_s!="")
             @aux <<@machine.children[j]
+            puts "Conditional 6"+@machine.children[j].type.to_s
+
           end
         end
 
         if(@aux.length>0)
-          # puts "valores escogidos1"+ @aux[0].number.to_s+""+@aux[0].type.to_s
 
           sort_array(@aux,0)
+          puts "Conditional 75"+@aux[0].number.to_s+""+@aux[0].type.to_s
+
           return  @aux[0].number.to_s+""+@aux[0].type.to_s
         else
           puts "ultima entrada"
           @aux.clear
           (0..@machine.children().length-1).each do |j|
-            @aux <<@machine.children[j]
+
+            if(@machine.children[j].type.to_s!="")
+              @aux <<@machine.children[j]
+              puts "Conditional 7"+@aux[j].number.to_s+""+@aux[j].type.to_s
+            else
+              puts "Conditional 7.1"+@machine.children[j].number.to_s+""+@machine.children[j].type.to_s
+            end
           end
           sort_array(@aux,0)
           # puts "valores escogidos2"+ @aux[0].number.to_s+""+@aux[0].type.to_s
+          puts "Conditional 8"+@aux[0].number.to_s+""+@aux[0].type.to_s
 
           return  @aux[0].number.to_s+""+@aux[0].type.to_s
         end
@@ -588,6 +615,7 @@ class Game
         #     puts "valores >>>>"+ @aux[j].number.to_s+""+@aux[j].type.to_s
         #   end
         #puts "valores escogidos3"+ @aux[0].number.to_s+""+@aux[0].type.to_s
+        puts "Conditional 9"+@aux[0].number.to_s+""+@aux[0].type.to_s
         return  @aux[0].number.to_s+""+@aux[0].type.to_s
         #puts "resuldato"+@aux[0].type.to_s
       end
