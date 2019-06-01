@@ -60,9 +60,6 @@ class Game
     end
   end
 
-  def cards_to_tree
-
-  end
 
   # Muestra las cartas de cada jugador
   def show_players
@@ -93,6 +90,7 @@ class Game
       puts "Carta: #{@players[player_random].card_thrown.number} , #{@players[player_random].card_thrown.type}"
       save_card_into_player_win(@players[player_random])
       cont += 1
+      puts
     end
     who_win
 
@@ -170,7 +168,6 @@ class Game
     card_win = @players[num_player_start].card_thrown
     while cont <= (@players.length - 1)
       card = @players[cont].card_thrown
-      puts "cartas lanzadaas"+card.type.to_s
       if card_win != card
         if card.type.to_s == @trump_card.type.to_s || card_win.type.to_s == @trump_card.type.to_s
           aux_card = validate_card_with_trump(card, card_win)
@@ -197,7 +194,6 @@ class Game
   #
   # num_player: numero que selecciona que jugador inicia la ronda
   def round(num_player)
-    puts "values"+num_player.to_s
     cont = 1
     while cont <= @players.length
       num_player = 0 if num_player == @players.length
@@ -208,6 +204,8 @@ class Game
         @cards_thrown.each do |card|
           puts "Carta: Numero: #{card.number} Tipo: #{card.type} "
         end
+        puts '--------------------------------'
+        puts
       end
       cont += 1
       num_player += 1
@@ -219,7 +217,6 @@ class Game
   #
   # player: Es el player que va a lanzar
   def throw_card_player(player)
-    puts "lanzar"+player.id
     puts "Carta del triunfo: Numero: #{@trump_card.number}, Tipo: #{@trump_card.type}"
     puts "Turno para el jugador: #{player.name}"
     puts "-------------------------------------Sus Cartas-----------------------------------------" 
@@ -327,16 +324,17 @@ class Game
     puts ''
     puts '----------------------------------------------------------------------------------------'
 
-    #condicional para validar la opcion a elejir por la maquina
-    if(player.isMachine)
-      puts 'Carta lanzada por la maquina'
-      puts "player"+player.id.to_s
-      card_id=player.min_max(@trump_card,@cards_thrown)
-      puts  "valor maquina"+card_id.to_s
+    # condicional para validar la opcion a elejir por la maquina
+    if player.isMachine
+      # puts 'Carta lanzada por la maquina'
+      card_id = player.min_max(@trump_card,@cards_thrown)
+      # puts  "valor maquina"+card_id.to_s
       card = search_card(player, card_id)
       if !card.nil?
         player.delete_node(card_id)
         player.card_thrown = card
+        puts "Carta lanzada por #{player.name}: #{card.id}"
+        puts
         @cards_thrown.push(player.card_thrown)
         (0..player.cards.length - 1).each do |i|
           player.cards.delete_at(i) if player.cards[i] == card
@@ -349,9 +347,7 @@ class Game
 
     else
       puts 'Digite el id de la carta a lanzar'
-      puts "player"+player.id.to_s
       card_id = gets.chomp.to_s
-      puts "id de la carta"+card_id
       card = search_card(player, card_id)
       if !card.nil?
         player.card_thrown = card
@@ -389,7 +385,7 @@ end
 
 game = Game.new
 (1..3).each do |i|
-  if i==3
+  if i == 3
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s,name.to_s,true)
