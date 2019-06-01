@@ -180,7 +180,12 @@ class Player
           @aux.clear
           #arrojar una carta con valor el menor valor del mazo de la maquna
           (0..@machine.children().length-1).each do |j|
-            @aux <<@machine.children[j]
+            if(@machine.children[j].type.to_s!="")
+              @aux <<@machine.children[j]
+              puts "Conditional 9.1"+@aux[j].number.to_s+""+@aux[j].type.to_s
+            else
+              puts "Conditional 9.2"+@machine.children[j].number.to_s+""+@machine.children[j].type.to_s
+            end
           end
           sort_array(@aux,0)
            puts "Conditional 71"+@aux[0].number.to_s+""+@aux[0].type.to_s
