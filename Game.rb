@@ -8,11 +8,8 @@ class Game
   # players: Se almacenran los jugadores
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
-  # glasses_canto: Valida si el canto se hizo con copas
-  # club_canto: Valida si el canto se hizo con bastos
-  # swords_canto: Valida si el canto se hizo con espadas
-  # golds_canto: Valida si el canto se hizo con oros
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :glasses_canto, :club_canto, :swords_canto, :golds_canto, :type_cards
+  # type_cards: Vector de los palos para cantar
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -20,10 +17,6 @@ class Game
     @cards = []
     @players = []
     @cards_thrown = []
-    @glasses_canto = false
-    @club_canto = false
-    @swords_canto = false
-    @golds_canto = false
     @type_cards = [Canto.new('glasses',false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
@@ -45,8 +38,8 @@ class Game
   # create_player: Agrega un jugador a la lista de jugadores
   #
   # name: nombre del jugador
-  def create_player(name)
-    @players.push(Player.new(name, name, 0))
+  def create_player(id,name,isMachine)
+    @players.push(Player.new(id, name, 0,isMachine))
   end
 
   # distribuete_cards: Selecciona la carta del triunfo y
@@ -57,10 +50,16 @@ class Game
       @players.each do |player|
         card = select_card
         @trump_card = card if @cards.length == 25
-        player.cards.push(card)
+        if player.isMachine
+          player.add_card(card)
+        else
+          player.cards.push(card)
+        end
       end
+
     end
   end
+  
   # Muestra las cartas de cada jugador
   def show_players
     puts @cards.length
@@ -90,6 +89,7 @@ class Game
       puts "Carta: #{@players[player_random].card_thrown.number} , #{@players[player_random].card_thrown.type}"
       save_card_into_player_win(@players[player_random])
       cont += 1
+      puts
     end
     who_win
 
@@ -203,6 +203,8 @@ class Game
         @cards_thrown.each do |card|
           puts "Carta: Numero: #{card.number} Tipo: #{card.type} "
         end
+        puts '--------------------------------'
+        puts
       end
       cont += 1
       num_player += 1
@@ -216,7 +218,7 @@ class Game
   def throw_card_player(player)
     puts "Carta del triunfo: Numero: #{@trump_card.number}, Tipo: #{@trump_card.type}"
     puts "Turno para el jugador: #{player.name}"
-    puts "-------------------------------------Sus Cartas-----------------------------------------"
+    puts "-------------------------------------Sus Cartas-----------------------------------------" 
     player.cards.each do |card|
       print card.id
       print ' || '
@@ -320,16 +322,38 @@ class Game
   def get_card(player, card_valid)
     puts ''
     puts '----------------------------------------------------------------------------------------'
-    puts 'Digite el id de la carta a lanzar o digite canto'
-    input_usr = gets.chomp
-    if input_usr == 'canto'
+
+    # condicional para validar la opcion a elejir por la maquina
+    if player.isMachine
+      # puts 'Carta lanzada por la maquina'
+      card_id = player.min_max(@trump_card,@cards_thrown)
+      # puts  "valor maquina"+card_id.to_s
+      card = search_card(player, card_id)
+      if !card.nil?
+        player.delete_node(card_id)
+        player.card_thrown = card
+        puts "Carta lanzada por #{player.name}: #{card.id}"
+        puts
+        @cards_thrown.push(player.card_thrown)
+        (0..player.cards.length - 1).each do |i|
+          player.cards.delete_at(i) if player.cards[i] == card
+        end
+        card_valid = false
+      else
+        puts 'Id no valido'
+      end
+      card_valid
+
+    else
+     puts 'Digite el id de la carta a lanzar o digite canto'
+      card_id = gets.chomp.to_s
+     if input_usr == 'canto'
       if validate_canto(player)
         card_valid
       else
         card_valid
       end
     else
-      card_id = input_usr
       card = search_card(player, card_id)
       if !card.nil?
         player.card_thrown = card
@@ -341,8 +365,9 @@ class Game
       else
         puts 'Id no valido'
       end
+     end
     end
-    card_valid
+   card_valid
   end
 
   def validate_canto(player)
@@ -386,7 +411,7 @@ class Game
   def save_card(card, type)
     card.each do |i|
       @cards.push(Card.new((i['number'].to_s + type.to_s), i['number'].to_s,
-                           type.to_s, i['value'].to_s))
+      type.to_s, i['value'].to_s))
     end
   end
 
@@ -400,10 +425,20 @@ class Game
 end
 
 game = Game.new
-(1..2).each do |i|
-  puts "Ingrese el nombre del jugador #{i}"
-  name = gets.chomp
-  game.create_player(name.to_s)
+(1..3).each do |i|
+  if i == 3
+    puts "Ingrese el nombre de la maquina #{i}"
+    name = gets.chomp
+    game.create_player(i.to_s,name.to_s,true)
+  else
+    puts "Ingrese el nombre del jugador #{i}"
+    name = gets.chomp
+    game.create_player(i.to_s,name.to_s,false)
+  end
+
 end
+
+#game.throw_card_player(1)
+#game.show_players()
 game.distribute_cards
 game.start_game
