@@ -1,16 +1,15 @@
 require_relative 'Card.rb'
 require_relative 'Player.rb'
-
 require 'json'
-
 class Game
   # Se crean las variables de clase
   # cards: Se alamcenaran las cartas del juego
   # players: Se almacenran los jugadores
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
-  attr_accessor :cards, :players, :cards_thrown, :trump_card , :machine,:machine1,:machine2,:machine3, :aux ,:aux1,:aux2
-  # se inicializa la raiz del arbol
+
+  attr_accessor :cards, :players, :cards_thrown, :trump_card
+
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
   def initialize
@@ -45,7 +44,6 @@ class Game
   # reparte las cartas de una en una a cada
   # jugador hasta que lleguen a 8 cartas
   def distribute_cards
-    i=0
     while @players[0].cards.length != 8
       @players.each do |player|
         card = select_card
@@ -59,8 +57,7 @@ class Game
 
     end
   end
-
-
+  
   # Muestra las cartas de cada jugador
   def show_players
     puts @cards.length
@@ -274,10 +271,10 @@ class Game
   # card_win: La carta del player que inicio la ronda
   def validate_card_with_trump(card, card_win)
     if card.type.to_s == @trump_card.type.to_s &&
-    card_win.type.to_s != @trump_card.type.to_s
+       card_win.type.to_s != @trump_card.type.to_s
       return card
     elsif card_win.type.to_s == @trump_card.type.to_s &&
-    card.type.to_s != @trump_card.type.to_s
+          card.type.to_s != @trump_card.type.to_s
       return card_win
     end
 
@@ -323,7 +320,6 @@ class Game
   def get_card(player, card_valid)
     puts ''
     puts '----------------------------------------------------------------------------------------'
-
     # condicional para validar la opcion a elejir por la maquina
     if player.isMachine
       # puts 'Carta lanzada por la maquina'
@@ -361,7 +357,6 @@ class Game
       end
       card_valid
     end
-
   end
 
   # save_card: Se guardan las cartas en el array cards
