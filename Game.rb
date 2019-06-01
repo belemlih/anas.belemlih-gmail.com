@@ -1,5 +1,6 @@
 require_relative 'Card.rb'
 require_relative 'Player.rb'
+require_relative 'Canto.rb'
 require 'json'
 class Game
   # Se crean las variables de clase
@@ -7,8 +8,8 @@ class Game
   # players: Se almacenran los jugadores
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
-
-  attr_accessor :cards, :players, :cards_thrown, :trump_card
+  # type_cards: Vector de los palos para cantar
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -16,6 +17,7 @@ class Game
     @cards = []
     @players = []
     @cards_thrown = []
+    @type_cards = [Canto.new('glasses',false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
     cards_data.each do |data|
@@ -96,9 +98,9 @@ class Game
   # who_win: Recorre el array de players y dentro,
   # recorre el array de cartas ganadas de cada jugador
   # haciendo la suma de las cartas ganadas guardando el resultado
-  # en la variable de poinst de cada jugador,
+  # en la variable de points de cada jugador,
   # Una vez finalizado ordena el array de players de mayor
-  # a menor con la variable poinst, se selecciona el primer player
+  # a menor con la variable points, se selecciona el primer player
   # y se muestran los datos del nombre y los puntos del jugador ganador
   # despues se listan los jugadores con sus cartas
   def who_win
@@ -111,13 +113,13 @@ class Game
     end
     players_win = @players.sort_by(&:points).reverse![0]
     puts 'GANADOR--------GANADOR---------GANADOR----'
-    puts "Nombre: #{players_win.name} || Puntos: #{players_win.points}"
+    puts "Nombre: #{players_win.name}"
     #players_win.cards_wins.each do |cards|
     #  puts cards.id
     #end
     @players.each do |player|
       puts ''
-      puts player.name
+      puts "Nombre: #{player.name} || Puntos: #{player.points}"
       puts 'Cartas: '
       player.cards_wins.each do |cards|
         print "#{cards.id}"
@@ -320,6 +322,7 @@ class Game
   def get_card(player, card_valid)
     puts ''
     puts '----------------------------------------------------------------------------------------'
+
     # condicional para validar la opcion a elejir por la maquina
     if player.isMachine
       # puts 'Carta lanzada por la maquina'
@@ -342,8 +345,15 @@ class Game
       card_valid
 
     else
-      puts 'Digite el id de la carta a lanzar'
+     puts 'Digite el id de la carta a lanzar o digite canto'
       card_id = gets.chomp.to_s
+     if input_usr == 'canto'
+      if validate_canto(player)
+        card_valid
+      else
+        card_valid
+      end
+    else
       card = search_card(player, card_id)
       if !card.nil?
         player.card_thrown = card
@@ -355,8 +365,44 @@ class Game
       else
         puts 'Id no valido'
       end
-      card_valid
+     end
     end
+   card_valid
+  end
+
+  def validate_canto(player)
+    valid_canto = false
+    if glasses_canto && golds_canto && swords_canto && club_canto
+      puts 'Ya se hicieron todos los cantos posibles'
+      valid_canto = false
+    else
+      @type_cards.each do |canto|
+        count_cantos = 0
+        player.cards.each do |card|
+          type_card = card.type
+          if canto.type == type_card
+            if card.number == '11' || card.number == '12'
+              count_cantos += 1
+              if count_cantos == 2
+                if canto.status == false
+                  valid_canto = true
+                  canto.status = true
+                  puts "Canto #{type_card} Valido: +20pts"
+                  player.points += 20
+                  return valid_canto
+                else
+                  puts "El canto #{canto.type} ya se hizo"
+                  return valid_canto
+                end
+              end
+            end
+          end
+        end
+      end
+      puts 'Canto no valido, no tiene las cartas necesarias'
+      return valid_canto
+    end
+    valid_canto
   end
 
   # save_card: Se guardan las cartas en el array cards
