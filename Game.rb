@@ -2,6 +2,7 @@ require_relative 'Card.rb'
 require_relative 'Player.rb'
 require_relative 'Canto.rb'
 require 'json'
+
 class Game
   # Se crean las variables de clase
   # cards: Se alamcenaran las cartas del juego
@@ -9,7 +10,7 @@ class Game
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
   # type_cards: Vector de los palos para cantar
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards, :roundS
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -17,6 +18,7 @@ class Game
     @cards = []
     @players = []
     @cards_thrown = []
+    @roundS = []
     @type_cards = [Canto.new('glasses', false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
@@ -87,12 +89,54 @@ class Game
       puts "------------Ganador de la ronda #{cont} ------------------"
       puts "Nombre: #{@players[player_random].name}, Con"
       puts "Carta: #{@players[player_random].card_thrown.number} , #{@players[player_random].card_thrown.type}"
+      add_round(cont)
       save_card_into_player_win(@players[player_random])
       cont += 1
       puts
     end
     who_win
 
+  end
+  def add_round(cont)
+    puts "Ingresa a Add Rounds"
+    count_machines = 0
+    round = ''
+    machine = ''
+    table_cards = ''
+    machine_plays_file = File.read('machinePlays.json')
+    machine_plays_data = JSON.load machine_plays_file
+    machine_plays = []
+    machine_plays_data.each do |data|
+      count_machines = data.length
+      machine_plays.push(data) 
+    end
+    puts "Cards: #{@cards_thrown.length} Players: #{@players.length}" 
+    if @cards_thrown.length == @players.length
+      @cards_thrown.each do |card_t|
+        @players.each do |player|
+          if player.isMachine
+            player.cards.each do |card|
+              if card_t.id == card.id
+                puts "Carta Maquina #{card_t}"
+              end
+            end
+          end
+        end
+        table_cards = "#{table_cards} #{card_t.id}"
+      end
+      machine = "Maquina#{count_machines}"
+      if cont < 3
+        @roundS.push("ronda#{cont}"=>{"cartaslanzadas" => table_cards})
+        puts @roundS
+      else
+        round = {"#{machine}"=> [@roundS]}
+        machine_plays.push(round)
+        puts machine_plays
+        File.open("machinePlays.json", "w") do |f|
+          f.puts(JSON.pretty_generate(machine_plays))
+        end
+      end
+    end
   end
 
   # who_win: Recorre el array de players y dentro,
@@ -334,7 +378,7 @@ class Game
         player.delete_node(card_id)
         player.card_thrown = card
         puts "Carta lanzada por #{player.name}: #{card.id}"
-        puts
+        puts ''
         @cards_thrown.push(player.card_thrown)
         (0..player.cards.length - 1).each do |i|
           player.cards.delete_at(i) if player.cards[i] == card
@@ -432,8 +476,8 @@ class Game
 end
 
 game = Game.new
-(1..3).each do |i|
-  if i == 3
+(1..5).each do |i|
+  if i == 5
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, true)

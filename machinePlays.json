@@ -1,0 +1,18 @@
+[
+  {
+    "Maquina1": [
+      [
+        {
+          "ronda1": {
+            "cartaslanzadas": " 6swords 7swords 2club 5golds 11club"
+          }
+        },
+        {
+          "ronda2": {
+            "cartaslanzadas": " 2golds 6glasses 10glasses 6golds 4glasses"
+          }
+        }
+      ]
+    ]
+  }
+]
