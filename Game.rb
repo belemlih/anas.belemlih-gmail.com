@@ -2,7 +2,7 @@ require_relative 'Card.rb'
 require_relative 'Player.rb'
 require_relative 'Canto.rb'
 require 'json'
-
+require_relative 'DataS.rb'
 class Game
   # Se crean las variables de clase
   # cards: Se alamcenaran las cartas del juego
@@ -10,7 +10,7 @@ class Game
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
   # type_cards: Vector de los palos para cantar
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards, :roundS, :card_machine
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards, :roundS, :card_machine, :data_rounds, :machine_data
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
@@ -20,6 +20,7 @@ class Game
     @players = []
     @cards_thrown = []
     @roundS = []
+    @data_rounds = []
     @type_cards = [Canto.new('glasses', false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
@@ -36,6 +37,7 @@ class Game
         end
       end
     end
+    load_file_plays()
   end
 
   # create_player: Agrega un jugador a la lista de jugadores
@@ -96,13 +98,10 @@ class Game
       puts
     end
     who_win
-
   end
-  def add_round(cont)
+
+  def load_file_plays
     count_machines = 0
-    round = ''
-    machine = ''
-    table_cards = ''
     machine_plays_file = File.read('machinePlays.json')
     machine_plays_data = JSON.load machine_plays_file
     machine_plays = []
@@ -113,41 +112,45 @@ class Game
       data.each do |play|
         if title
           title = false
+          varS = DataS.new(type)
+          varS.add_content(play)
+          @data_rounds.push(varS)
         else
           type = play
           title = true
         end
         file = {"#{type}" => play}
       end
-      puts file
+      puts "File: #{file}"
       count_machines = data.length
-      machine_plays.push(file) 
+      machine_plays.push(file)
     end
+    machine = "Maquina_#{count_machines}"
+    @machine_data = DataS.new(machine)
+  end
+
+  def add_round(cont)
+    round = ''
+    machine = ''
+    table_cards = ''
     if @cards_thrown.length == @players.length
       @cards_thrown.each do |card_t|
-        @players.each do |player|
-          if player.isMachine
-            player.cards.each do |card|
-              if card_t.id == card.id
-                puts "Carta Maquina #{card_t}"
-              end
-            end
-          end
-        end
         table_cards = "#{table_cards} #{card_t.id}"
       end
-      machine = "Maquina#{count_machines}"
       if cont < 3
-        puts @card_machine
-        @roundS.push("ronda#{cont}"=>{"cartasLanzadas" => table_cards, "cartaMaquina" => @card_machine})
-        puts @roundS
+        data_round = DataRound.new("ronda_#{cont}", @card_machine, table_cards)
+        @machine_data.rounds.push(data_round)
+        #@roundS.push("ronda_#{cont}"=>{"cartasLanzadas" => table_cards, "cartaMaquina" => @card_machine})
       else
-        round = {"#{machine}"=> [@roundS]}
-        machine_plays.push(round)
-        puts machine_plays
-        File.open("machinePlays.json", "w") do |f|
-          f.puts(JSON.pretty_generate(machine_plays))
+        data_round = DataRound.new("ronda_#{cont}", @card_machine, table_cards)
+        @machine_data.rounds.push(data_round)
+        #@roundS.push("ronda_#{cont}"=>{"cartasLanzadas" => table_cards, "cartaMaquina" => @card_machine})
+        puts machine_data.id_machine
+        @machine_data.rounds.each do |round|
+          puts "Rondas #{round.id_round} Cartas: #{round.cards_play} Carta Maquina: #{round.card_machine}"
         end
+        machine_data_json = JSON.parse(@machine_data.to_s)
+        File.write("machinePlays.json", JSON.pretty_generate(machine_data_json))
       end
     end
   end
@@ -490,8 +493,8 @@ class Game
 end
 
 game = Game.new
-(1..5).each do |i|
-  if i == 5
+(1..2).each do |i|
+  if i == 2
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, true)
