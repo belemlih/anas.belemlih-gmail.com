@@ -98,7 +98,6 @@ class Game
 
   end
   def add_round(cont)
-    puts "Ingresa a Add Rounds"
     count_machines = 0
     round = ''
     machine = ''
@@ -106,11 +105,23 @@ class Game
     machine_plays_file = File.read('machinePlays.json')
     machine_plays_data = JSON.load machine_plays_file
     machine_plays = []
+    file = ''
     machine_plays_data.each do |data|
+      title = false
+      type = ''
+      data.each do |play|
+        if title
+          title = false
+        else
+          type = play
+          title = true
+        end
+        file = {"#{type}" => play}
+      end
+      puts file
       count_machines = data.length
-      machine_plays.push(data) 
+      machine_plays.push(file) 
     end
-    puts "Cards: #{@cards_thrown.length} Players: #{@players.length}" 
     if @cards_thrown.length == @players.length
       @cards_thrown.each do |card_t|
         @players.each do |player|
