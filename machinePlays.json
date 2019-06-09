@@ -1,31 +1,55 @@
 [
   {
-    "Maquina0": [
+    "[\"Maquina0\", [[{\"ronda1\"=>{\"cartaslanzadas\"=>\" 6swords 7swords 2club 5golds 11club\"}}, {\"ronda2\"=>{\"cartaslanzadas\"=>\" 2golds 6glasses 10glasses 6golds 4glasses\"}}]]]": [
+      "Maquina0",
       [
-        {
-          "ronda1": {
-            "cartaslanzadas": " 6swords 7swords 2club 5golds 11club"
+        [
+          {
+            "ronda1": {
+              "cartaslanzadas": " 6swords 7swords 2club 5golds 11club"
+            }
+          },
+          {
+            "ronda2": {
+              "cartaslanzadas": " 2golds 6glasses 10glasses 6golds 4glasses"
+            }
           }
-        },
-        {
-          "ronda2": {
-            "cartaslanzadas": " 2golds 6glasses 10glasses 6golds 4glasses"
-          }
-        }
+        ]
       ]
     ]
   },
   {
-    "Maquina2": [
+    "[\"Maquina2\", [[{\"ronda1\"=>{\"cartaslanzadas\"=>\" 5club 10glasses 4golds 2glasses 7swords\"}}, {\"ronda2\"=>{\"cartaslanzadas\"=>\" 5golds 4glasses 6club 6golds 11golds\"}}]]]": [
+      "Maquina2",
+      [
+        [
+          {
+            "ronda1": {
+              "cartaslanzadas": " 5club 10glasses 4golds 2glasses 7swords"
+            }
+          },
+          {
+            "ronda2": {
+              "cartaslanzadas": " 5golds 4glasses 6club 6golds 11golds"
+            }
+          }
+        ]
+      ]
+    ]
+  },
+  {
+    "Maquina1": [
       [
         {
           "ronda1": {
-            "cartaslanzadas": " 5club 10glasses 4golds 2glasses 7swords"
+            "cartasLanzadas": " 5club 11glasses 4swords 7golds 1glasses",
+            "cartaMaquina": "7golds"
           }
         },
         {
           "ronda2": {
-            "cartaslanzadas": " 5golds 4glasses 6club 6golds 11golds"
+            "cartasLanzadas": " 7swords 6glasses 6golds 1golds 10golds",
+            "cartaMaquina": "10golds"
           }
         }
       ]

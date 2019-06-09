@@ -10,11 +10,12 @@ class Game
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
   # type_cards: Vector de los palos para cantar
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards, :roundS
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards, :roundS, :card_machine
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
   def initialize
+    @card_machine = ''
     @cards = []
     @players = []
     @cards_thrown = []
@@ -137,7 +138,8 @@ class Game
       end
       machine = "Maquina#{count_machines}"
       if cont < 3
-        @roundS.push("ronda#{cont}"=>{"cartaslanzadas" => table_cards})
+        puts @card_machine
+        @roundS.push("ronda#{cont}"=>{"cartasLanzadas" => table_cards, "cartaMaquina" => @card_machine})
         puts @roundS
       else
         round = {"#{machine}"=> [@roundS]}
@@ -384,6 +386,7 @@ class Game
       card_id = player.min_max(@trump_card, @cards_thrown)
       # puts  "valor maquina"+card_id.to_s
       card = search_card(player, card_id)
+      @card_machine = card_id
       validate_canto(player) ? card_valid : card_valid
       if !card.nil?
         player.delete_node(card_id)
