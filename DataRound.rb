@@ -1,9 +1,9 @@
 class DataRound
-    attr_accessor :id_round, :card_machine, :cards_play
+    attr_accessor :id_round, :card_win, :cards_play
   
-    def initialize(id_round, card_machine, cards_play)
+    def initialize(id_round, card_win, cards_play)
         @id_round = id_round
-        @card_machine = card_machine
+        @card_win = card_win
         @cards_play = cards_play
     end
   end

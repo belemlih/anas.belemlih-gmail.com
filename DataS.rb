@@ -16,7 +16,7 @@ class DataS
               play.each do |card|
                 if title
                   title = false
-                  data_round = DataRound.new(type, card['cartaMaquina'], card['cartasLanzadas'])
+                  data_round = DataRound.new(type, card['cartaGanadora'], card['cartasLanzadas'])
                   @rounds.push(data_round)
                 else
                   type = card
