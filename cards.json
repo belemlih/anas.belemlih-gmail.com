@@ -1,5 +1,5 @@
 {
-    "golds": [
+    "oros": [
       {
         "number": "1",
         "image": "",
@@ -51,7 +51,7 @@
         "value": "4"
       }
     ],
-    "glasses": [
+    "bastos": [
       {
         "number": "1",
         "image": "",
@@ -103,7 +103,7 @@
         "value": "4"
       }
     ],
-    "swords": [
+    "espadas": [
       {
         "number": "1",
         "image": "",
@@ -155,7 +155,7 @@
         "value": "4"
       }
     ],
-    "club": [
+    "copas": [
       {
         "number": "1",
         "image": "",

@@ -22,7 +22,7 @@ class Game
     @cards_thrown = []
     @roundS = []
     @data_rounds = []
-    @type_cards = [Canto.new('glasses', false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
+    @type_cards = [Canto.new('bastos', false), Canto.new('copas', false), Canto.new('oros', false), Canto.new('espadas', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
     cards_data.each do |data|
@@ -122,7 +122,7 @@ class Game
         end
       end
     end
-    count_machines = machine_plays_data.length+1
+    count_machines = machine_plays_data.length + 1
     machine = "Maquina_#{count_machines}"
     @machine_data = DataS.new(machine)
   end
@@ -151,19 +151,19 @@ class Game
 
   def get_json
     json_data = '{'
-    (0..@data_rounds.length-1).each do |game|
+    (0..@data_rounds.length - 1).each do |game|
       json_data += "\"#{@data_rounds[game].id_machine}\":["
-      (0..@data_rounds[game].rounds.length-1).each do |round|
+      (0..@data_rounds[game].rounds.length - 1).each do |round|
         json_data += "{"
         json_data += "\"#{@data_rounds[game].rounds[round].id_round}\":{\"cartasLanzadas\":\"#{@data_rounds[game].rounds[round].cards_play}\","
         json_data += "\"cartaGanadora\":\"#{@data_rounds[game].rounds[round].card_win}\"}"
-        if @data_rounds[game].rounds.length-1 == round
+        if @data_rounds[game].rounds.length - 1 == round
           json_data += "}"
         else
           json_data += "},"
         end
       end
-      if @data_rounds.length-1 == game
+      if @data_rounds.length - 1 == game
         json_data += "]"
       else
         json_data += "],"
@@ -516,11 +516,16 @@ end
 
 game = Game.new
 (1..5).each do |i|
-  if i == 2
+  if i == 5
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, true)
+  else
 
+    puts "Ingrese el nombre del jugador #{i}"
+    name = gets.chomp
+    game.create_player(i.to_s, name.to_s, false)
+  end
 end
 
 #game.throw_card_player(1)
