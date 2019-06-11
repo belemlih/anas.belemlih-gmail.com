@@ -2,6 +2,7 @@ require_relative 'Card.rb'
 require_relative 'Player.rb'
 require_relative 'Canto.rb'
 require 'json'
+require_relative 'DataS.rb'
 class Game
   # Se crean las variables de clase
   # cards: Se alamcenaran las cartas del juego
@@ -9,14 +10,18 @@ class Game
   # cards_thrown: Cartas lanzadas por los jugadores en cada ronda
   # trump_card: Carta del triunfo
   # type_cards: Vector de los palos para cantar
-  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards
+  attr_accessor :cards, :players, :cards_thrown, :trump_card, :type_cards, :roundS, :card_machine, :data_rounds, :machine_data, :card_win_round
 
   # Contructor: se inicializan las las varialbes de clases
   # y se lee el archivo cards.json para obtener las cartas
   def initialize
+    @card_machine = ''
+    @card_win_round = ''
     @cards = []
     @players = []
     @cards_thrown = []
+    @roundS = []
+    @data_rounds = []
     @type_cards = [Canto.new('glasses', false), Canto.new('club', false), Canto.new('golds', false), Canto.new('swords', false)]
     cards_json = File.read('cards.json')
     cards_data = JSON.load cards_json
@@ -33,6 +38,7 @@ class Game
         end
       end
     end
+    load_file_plays()
   end
 
   # create_player: Agrega un jugador a la lista de jugadores
@@ -87,12 +93,84 @@ class Game
       puts "------------Ganador de la ronda #{cont} ------------------"
       puts "Nombre: #{@players[player_random].name}, Con"
       puts "Carta: #{@players[player_random].card_thrown.number} , #{@players[player_random].card_thrown.type}"
+      @card_win_round = @players[player_random].card_thrown.id
+      add_round(cont)
       save_card_into_player_win(@players[player_random])
       cont += 1
       puts
     end
     who_win
+  end
 
+  def load_file_plays
+    count_machines = 0
+    machine_plays_file = File.read('machinePlays.json')
+    machine_plays_data = JSON.load machine_plays_file
+    file = ''
+    machine_plays_data.each do |data|
+      title = false
+      type = ''
+      data.each do |play|
+        if title
+          title = false
+          varS = DataS.new(type)
+          varS.add_content(play)
+          @data_rounds.push(varS)
+        else
+          type = play
+          title = true
+        end
+      end
+    end
+    count_machines = machine_plays_data.length+1
+    machine = "Maquina_#{count_machines}"
+    @machine_data = DataS.new(machine)
+  end
+
+  def add_round(cont)
+    round = ''
+    machine = ''
+    table_cards = ''
+    if @cards_thrown.length == @players.length
+      @cards_thrown.each do |card_t|
+        table_cards = "#{table_cards} #{card_t.id}"
+      end
+      if cont < 8
+        data_round = DataRound.new("ronda_#{cont}", @card_win_round, table_cards)
+        @machine_data.rounds.push(data_round)
+      else
+        data_round = DataRound.new("ronda_#{cont}", @card_win_round, table_cards)
+        @machine_data.rounds.push(data_round)
+        @data_rounds.push(@machine_data)
+        File.open("machinePlays.json", "w+") do |f|
+          f.puts(JSON.pretty_generate(get_json))
+        end
+      end
+    end
+  end
+
+  def get_json
+    json_data = '{'
+    (0..@data_rounds.length-1).each do |game|
+      json_data += "\"#{@data_rounds[game].id_machine}\":["
+      (0..@data_rounds[game].rounds.length-1).each do |round|
+        json_data += "{"
+        json_data += "\"#{@data_rounds[game].rounds[round].id_round}\":{\"cartasLanzadas\":\"#{@data_rounds[game].rounds[round].cards_play}\","
+        json_data += "\"cartaGanadora\":\"#{@data_rounds[game].rounds[round].card_win}\"}"
+        if @data_rounds[game].rounds.length-1 == round
+          json_data += "}"
+        else
+          json_data += "},"
+        end
+      end
+      if @data_rounds.length-1 == game
+        json_data += "]"
+      else
+        json_data += "],"
+      end
+    end
+    json_data += '}'
+    return JSON.parse(json_data)
   end
 
   # who_win: Recorre el array de players y dentro,
@@ -333,12 +411,13 @@ class Game
       card_id = player.min_max(@trump_card, @cards_thrown)
       # puts  "valor maquina"+card_id.to_s
       card = search_card(player, card_id)
+      @card_machine = card_id
       validate_canto(player) ? card_valid : card_valid
       if !card.nil?
         player.delete_node(card_id)
         player.card_thrown = card
         puts "Carta lanzada por #{player.name}: #{card.id}"
-        puts
+        puts ''
         @cards_thrown.push(player.card_thrown)
         (0..player.cards.length - 1).each do |i|
           player.cards.delete_at(i) if player.cards[i] == card
@@ -436,16 +515,11 @@ class Game
 end
 
 game = Game.new
-(1..2).each do |i|
+(1..5).each do |i|
   if i == 2
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, true)
-  else
-    puts "Ingrese el nombre del jugador #{i}"
-    name = gets.chomp
-    game.create_player(i.to_s, name.to_s, false)
-  end
 
 end
 

@@ -1,0 +1,52 @@
+{
+  "Maquina_1": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 6golds 12golds 7glasses 2swords 4swords",
+        "cartaGanadora": "12golds"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 2golds 7swords 7golds 5golds 11glasses",
+        "cartaGanadora": "7golds"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 6glasses 10glasses 12glasses 4glasses 5swords",
+        "cartaGanadora": "12glasses"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 3glasses 4golds 5glasses 10golds 2glasses",
+        "cartaGanadora": "3glasses"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 1swords 10swords 6swords 11golds 11swords",
+        "cartaGanadora": "1swords"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 7club 10club 11club 12club 3golds",
+        "cartaGanadora": "12club"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 2club 4club 6club 3swords 12swords",
+        "cartaGanadora": "6club"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 1club 1golds 5club 3club 1glasses",
+        "cartaGanadora": "1club"
+      }
+    }
+  ]
+}
