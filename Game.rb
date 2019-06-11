@@ -187,22 +187,26 @@ class Game
       player.cards_wins.each do |cards|
         result_sum += cards.value.to_i
       end
-      player.points = result_sum
+      player.points += result_sum
     end
     players_win = @players.sort_by(&:points).reverse![0]
     puts 'GANADOR--------GANADOR---------GANADOR----'
     puts "Nombre: #{players_win.name}"
+    puts '-----------------------TABLA DE RESULTADOS------------------------'
     #players_win.cards_wins.each do |cards|
     #  puts cards.id
     #end
     @players.each do |player|
       puts ''
+      puts '------------------------------------------------------------------'
       puts "Nombre: #{player.name} || Puntos: #{player.points}"
-      puts 'Cartas: '
+      puts 'Cartas Ganadas: '
       player.cards_wins.each do |cards|
         print "#{cards.id}"
         print ' || '
       end
+      puts ''
+      puts '------------------------------------------------------------------'
     end
   end
 
@@ -512,6 +516,7 @@ end
 
 game = Game.new
 (1..5).each do |i|
+  if i == 2
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, true)
