@@ -51,11 +51,13 @@ class Game
   # distribuete_cards: Selecciona la carta del triunfo y
   # reparte las cartas de una en una a cada
   # jugador hasta que lleguen a 8 cartas
-  def distribute_cards
-    while @players[0].cards.length != 8
+  # num_player: Cantidad de jugadores
+  # num_length_cards: Cantidad de cartas por jugador
+  def distribute_cards(num_player, num_length_cards)
+    while @players[0].cards.length != num_length_cards.to_i
       @players.each do |player|
         card = select_card
-        @trump_card = card if @cards.length == 25
+        @trump_card = card if @cards.length == (40 - (num_length_cards.to_i * num_player.to_i)) + 1
         if player.isMachine
           player.add_card(card)
         else
@@ -309,6 +311,15 @@ class Game
     while card_valid
       card_valid = get_card(player, card_valid)
     end
+    if !@cards.empty? && player.isMachine
+      card_get = select_card
+      puts "LA carta de la maquina #{card_get.id}"
+      player.add_card(card_get)
+    elsif !@cards.empty?
+      card_get = select_card
+      puts "LA carta del Jugador #{card_get.id}"
+      player.cards.push(card_get)
+    end
   end
 
   # search_card: Busca la carta en las cartas del player, Si la encuentra,
@@ -515,20 +526,40 @@ class Game
 end
 
 game = Game.new
-(1..5).each do |i|
-  if i == 5
+repeat = true
+num_player = 0
+num_length_cards = 0
+while repeat
+  puts 'Ingrese la cantidad de jugadores'
+  num_player = gets.chomp
+
+  if num_player.to_i == 2 || num_player.to_i == 5
+    num_length_cards = 8
+    repeat = false
+  elsif num_player.to_i == 3
+    num_length_cards = 13
+    repeat = false
+  elsif num_player.to_i == 4
+    num_length_cards = 10
+    repeat = false
+  else
+    puts 'Numero invalido'
+  end
+end
+
+(1..num_player.to_i).each do |i|
+  if i == num_player.to_i
     puts "Ingrese el nombre de la maquina #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, true)
   else
-
     puts "Ingrese el nombre del jugador #{i}"
     name = gets.chomp
     game.create_player(i.to_s, name.to_s, false)
   end
 end
 
-#game.throw_card_player(1)
-#game.show_players()
-game.distribute_cards
+# game.throw_card_player(1)
+# game.show_players()
+game.distribute_cards(num_player, num_length_cards)
 game.start_game
