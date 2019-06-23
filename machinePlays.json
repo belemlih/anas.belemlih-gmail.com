@@ -48,5 +48,847 @@
         "cartaGanadora": "1club"
       }
     }
+  ],
+  "Maquina_2": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 7copas 10copas",
+        "cartaGanadora": "10copas"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 7bastos 10espadas",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 7espadas 11espadas",
+        "cartaGanadora": "11espadas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 11copas 12bastos",
+        "cartaGanadora": "11copas"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 12copas 3espadas",
+        "cartaGanadora": "12copas"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 12espadas 1espadas",
+        "cartaGanadora": "1espadas"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 7oros 3copas",
+        "cartaGanadora": "7oros"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 6oros 2oros",
+        "cartaGanadora": "6oros"
+      }
+    }
+  ],
+  "Maquina_3": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 6oros 11oros",
+        "cartaGanadora": "11oros"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 10copas 7espadas",
+        "cartaGanadora": "7espadas"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 1bastos 12bastos",
+        "cartaGanadora": "1bastos"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 3copas 12oros",
+        "cartaGanadora": "3copas"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 2copas 6bastos",
+        "cartaGanadora": "2copas"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 10espadas 12espadas",
+        "cartaGanadora": "12espadas"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 5oros 2bastos",
+        "cartaGanadora": "5oros"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 10oros 4espadas",
+        "cartaGanadora": "4espadas"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 11bastos 3bastos",
+        "cartaGanadora": "3bastos"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 2oros 4copas",
+        "cartaGanadora": "2oros"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 7bastos 4bastos",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 5copas 4oros",
+        "cartaGanadora": "5copas"
+      }
+    },
+    {
+      "ronda_13": {
+        "cartasLanzadas": " 6copas 12copas",
+        "cartaGanadora": "12copas"
+      }
+    },
+    {
+      "ronda_14": {
+        "cartasLanzadas": " 1copas 11copas",
+        "cartaGanadora": "1copas"
+      }
+    },
+    {
+      "ronda_15": {
+        "cartasLanzadas": " 5bastos 3oros",
+        "cartaGanadora": "5bastos"
+      }
+    },
+    {
+      "ronda_16": {
+        "cartasLanzadas": " 7oros 1oros",
+        "cartaGanadora": "1oros"
+      }
+    }
+  ],
+  "Maquina_4": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 6espadas 5espadas",
+        "cartaGanadora": "6espadas"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 7bastos 11oros",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 7espadas 2copas",
+        "cartaGanadora": "2copas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 1bastos 11espadas",
+        "cartaGanadora": "1bastos"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 10bastos 11bastos",
+        "cartaGanadora": "11bastos"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 6bastos 7oros",
+        "cartaGanadora": "6bastos"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 12bastos 4oros",
+        "cartaGanadora": "12bastos"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 1oros 7copas",
+        "cartaGanadora": "7copas"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 2espadas 6oros",
+        "cartaGanadora": "2espadas"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 1espadas 3oros",
+        "cartaGanadora": "1espadas"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 12espadas 5bastos",
+        "cartaGanadora": "12espadas"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 12oros 2oros",
+        "cartaGanadora": "12oros"
+      }
+    }
+  ],
+  "Maquina_5": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 1oros 4espadas",
+        "cartaGanadora": "1oros"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 7espadas 10espadas",
+        "cartaGanadora": "10espadas"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 2copas 11bastos",
+        "cartaGanadora": "2copas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 5espadas 3copas",
+        "cartaGanadora": "5espadas"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 5copas 5bastos",
+        "cartaGanadora": "5copas"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 4copas 6oros",
+        "cartaGanadora": "6oros"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 7copas 10copas",
+        "cartaGanadora": "10copas"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 6bastos 10oros",
+        "cartaGanadora": "10oros"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 4oros 7oros",
+        "cartaGanadora": "7oros"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 6copas 12oros",
+        "cartaGanadora": "12oros"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 12copas 1copas",
+        "cartaGanadora": "1copas"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 6espadas 3espadas",
+        "cartaGanadora": "3espadas"
+      }
+    },
+    {
+      "ronda_13": {
+        "cartasLanzadas": " 4bastos 7bastos",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_14": {
+        "cartasLanzadas": " 11copas 1bastos",
+        "cartaGanadora": "11copas"
+      }
+    },
+    {
+      "ronda_15": {
+        "cartasLanzadas": " 12espadas 5oros",
+        "cartaGanadora": "5oros"
+      }
+    },
+    {
+      "ronda_16": {
+        "cartasLanzadas": " 11espadas 1espadas",
+        "cartaGanadora": "1espadas"
+      }
+    },
+    {
+      "ronda_17": {
+        "cartasLanzadas": " 3bastos 10bastos",
+        "cartaGanadora": "3bastos"
+      }
+    }
+  ],
+  "Maquina_6": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 5bastos 7bastos",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 4bastos 3bastos",
+        "cartaGanadora": "3bastos"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 5copas 10copas",
+        "cartaGanadora": "10copas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 6bastos 12copas",
+        "cartaGanadora": "6bastos"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 7espadas 3copas",
+        "cartaGanadora": "7espadas"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 10bastos 2espadas",
+        "cartaGanadora": "10bastos"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 6copas 5espadas",
+        "cartaGanadora": "6copas"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 2copas 7oros",
+        "cartaGanadora": "7oros"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 1bastos 11espadas",
+        "cartaGanadora": "1bastos"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 4oros 5oros",
+        "cartaGanadora": "5oros"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 4espadas 2bastos",
+        "cartaGanadora": "4espadas"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 12bastos 6espadas",
+        "cartaGanadora": "12bastos"
+      }
+    },
+    {
+      "ronda_13": {
+        "cartasLanzadas": " 12espadas 11bastos",
+        "cartaGanadora": "12espadas"
+      }
+    },
+    {
+      "ronda_14": {
+        "cartasLanzadas": " 3espadas 6oros",
+        "cartaGanadora": "6oros"
+      }
+    },
+    {
+      "ronda_15": {
+        "cartasLanzadas": " 10espadas 1espadas",
+        "cartaGanadora": "1espadas"
+      }
+    }
+  ],
+  "Maquina_7": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 2bastos 5bastos 7copas",
+        "cartaGanadora": "5bastos"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 12bastos 10espadas 6copas",
+        "cartaGanadora": "12bastos"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 5espadas 2copas 6bastos",
+        "cartaGanadora": "5espadas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 11espadas 6oros 4bastos",
+        "cartaGanadora": "6oros"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 7bastos 10bastos 11oros",
+        "cartaGanadora": "11oros"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 4copas 10oros 6espadas",
+        "cartaGanadora": "10oros"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 7espadas 12espadas 12oros",
+        "cartaGanadora": "12oros"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 5copas 3oros 10copas",
+        "cartaGanadora": "3oros"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 1bastos 11copas 4oros",
+        "cartaGanadora": "4oros"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 3copas 12copas 11bastos",
+        "cartaGanadora": "3copas"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 4espadas 1copas 3espadas",
+        "cartaGanadora": "3espadas"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 3bastos 1oros 1espadas",
+        "cartaGanadora": "1oros"
+      }
+    },
+    {
+      "ronda_13": {
+        "cartasLanzadas": " 2espadas 2oros 7oros",
+        "cartaGanadora": "7oros"
+      }
+    }
+  ],
+  "Maquina_8": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 2copas 5espadas",
+        "cartaGanadora": "5espadas"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 6oros 12oros",
+        "cartaGanadora": "12oros"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 2oros 4bastos",
+        "cartaGanadora": "2oros"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 2bastos 2espadas",
+        "cartaGanadora": "2espadas"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 5bastos 3bastos",
+        "cartaGanadora": "3bastos"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 4copas 10espadas",
+        "cartaGanadora": "10espadas"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 3copas 7copas",
+        "cartaGanadora": "3copas"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 7espadas 3espadas",
+        "cartaGanadora": "3espadas"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 5oros 6copas",
+        "cartaGanadora": "5oros"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 6bastos 1bastos",
+        "cartaGanadora": "1bastos"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 10bastos 11bastos",
+        "cartaGanadora": "11bastos"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 7bastos 4oros",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_13": {
+        "cartasLanzadas": " 10copas 3oros",
+        "cartaGanadora": "10copas"
+      }
+    },
+    {
+      "ronda_14": {
+        "cartasLanzadas": " 12copas 1copas",
+        "cartaGanadora": "1copas"
+      }
+    },
+    {
+      "ronda_15": {
+        "cartasLanzadas": " 10oros 1oros",
+        "cartaGanadora": "1oros"
+      }
+    },
+    {
+      "ronda_16": {
+        "cartasLanzadas": " 12bastos 11espadas",
+        "cartaGanadora": "11espadas"
+      }
+    }
+  ],
+  "Maquina_9": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 11copas 6bastos",
+        "cartaGanadora": "11copas"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 4copas 10copas",
+        "cartaGanadora": "10copas"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 2espadas 10oros",
+        "cartaGanadora": "2espadas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 7bastos 1bastos",
+        "cartaGanadora": "1bastos"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 5oros 11oros",
+        "cartaGanadora": "11oros"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 5espadas 5bastos",
+        "cartaGanadora": "5espadas"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 6oros 5copas",
+        "cartaGanadora": "5copas"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 7copas 10bastos",
+        "cartaGanadora": "7copas"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 3copas 6copas",
+        "cartaGanadora": "3copas"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 12copas 4espadas",
+        "cartaGanadora": "12copas"
+      }
+    },
+    {
+      "ronda_11": {
+        "cartasLanzadas": " 2oros 12oros",
+        "cartaGanadora": "12oros"
+      }
+    },
+    {
+      "ronda_12": {
+        "cartasLanzadas": " 4bastos 3oros",
+        "cartaGanadora": "4bastos"
+      }
+    },
+    {
+      "ronda_13": {
+        "cartasLanzadas": " 6espadas 1copas",
+        "cartaGanadora": "1copas"
+      }
+    },
+    {
+      "ronda_14": {
+        "cartasLanzadas": " 7espadas 10espadas",
+        "cartaGanadora": "10espadas"
+      }
+    },
+    {
+      "ronda_15": {
+        "cartasLanzadas": " 12espadas 11espadas",
+        "cartaGanadora": "12espadas"
+      }
+    },
+    {
+      "ronda_16": {
+        "cartasLanzadas": " 12bastos 7oros",
+        "cartaGanadora": "12bastos"
+      }
+    },
+    {
+      "ronda_17": {
+        "cartasLanzadas": " 3bastos 11bastos",
+        "cartaGanadora": "3bastos"
+      }
+    },
+    {
+      "ronda_18": {
+        "cartasLanzadas": " 3espadas 4oros",
+        "cartaGanadora": "3espadas"
+      }
+    },
+    {
+      "ronda_19": {
+        "cartasLanzadas": " 1espadas 2bastos",
+        "cartaGanadora": "1espadas"
+      }
+    },
+    {
+      "ronda_20": {
+        "cartasLanzadas": " 2copas 1oros",
+        "cartaGanadora": "2copas"
+      }
+    }
+  ],
+  "Maquina_10": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 10oros 7bastos 11bastos 6espadas",
+        "cartaGanadora": "10oros"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 10copas 12copas 7espadas 5oros",
+        "cartaGanadora": "5oros"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 4espadas 5bastos 5espadas 11espadas",
+        "cartaGanadora": "11espadas"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 1espadas 3copas 1oros 5copas",
+        "cartaGanadora": "1oros"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 2bastos 4bastos 7oros 3oros",
+        "cartaGanadora": "3oros"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 12espadas 3espadas 2espadas 10bastos",
+        "cartaGanadora": "3espadas"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 7copas 1copas 2oros 6copas",
+        "cartaGanadora": "2oros"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 2copas 10espadas 11oros 12bastos",
+        "cartaGanadora": "11oros"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 12oros 1bastos 3bastos 6bastos",
+        "cartaGanadora": "12oros"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 6oros 4oros 4copas 11copas",
+        "cartaGanadora": "6oros"
+      }
+    }
+  ],
+  "Maquina_11": [
+    {
+      "ronda_1": {
+        "cartasLanzadas": " 1oros 4espadas 2oros 10bastos",
+        "cartaGanadora": "10bastos"
+      }
+    },
+    {
+      "ronda_2": {
+        "cartasLanzadas": " 12bastos 6copas 12copas 6espadas",
+        "cartaGanadora": "12bastos"
+      }
+    },
+    {
+      "ronda_3": {
+        "cartasLanzadas": " 7oros 5espadas 3bastos 5copas",
+        "cartaGanadora": "3bastos"
+      }
+    },
+    {
+      "ronda_4": {
+        "cartasLanzadas": " 5oros 6oros 1copas 12espadas",
+        "cartaGanadora": "6oros"
+      }
+    },
+    {
+      "ronda_5": {
+        "cartasLanzadas": " 10copas 11oros 4copas 2copas",
+        "cartaGanadora": "10copas"
+      }
+    },
+    {
+      "ronda_6": {
+        "cartasLanzadas": " 10espadas 11bastos 3espadas 3oros",
+        "cartaGanadora": "11bastos"
+      }
+    },
+    {
+      "ronda_7": {
+        "cartasLanzadas": " 7copas 7espadas 4oros 10oros",
+        "cartaGanadora": "7copas"
+      }
+    },
+    {
+      "ronda_8": {
+        "cartasLanzadas": " 11espadas 7bastos 5bastos 12oros",
+        "cartaGanadora": "7bastos"
+      }
+    },
+    {
+      "ronda_9": {
+        "cartasLanzadas": " 3copas 4bastos 1espadas 6bastos",
+        "cartaGanadora": "6bastos"
+      }
+    },
+    {
+      "ronda_10": {
+        "cartasLanzadas": " 11copas 2espadas 1bastos 2bastos",
+        "cartaGanadora": "1bastos"
+      }
+    }
   ]
 }
