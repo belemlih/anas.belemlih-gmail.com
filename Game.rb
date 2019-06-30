@@ -471,15 +471,27 @@ class Game
     else
       @type_cards.each do |canto|
         count_cantos = 0
+        count_eleven = 0
         player.cards.each do |card|
           type_card = card.type
           if canto.type == type_card
+            if card.number == '11'
+              count_eleven += 1
+              if count_eleven == 4
+                puts "Canto TUTE. Gana el juego"
+                player.points += 100
+                #Finaliza Juego
             if card.number == '11' || card.number == '12'
               count_cantos += 1
               if count_cantos == 2
                 if canto.status == false
                   valid_canto = true
                   canto.status = true
+                  if canto.type == @trump_card
+                    puts "Canto #{type_card} Valido del mismo palo: +40pts"
+                    player.points += 40
+                    return valid_canto
+                  end
                   puts "Canto #{type_card} Valido: +20pts"
                   player.points += 20
                   return valid_canto
@@ -495,6 +507,7 @@ class Game
             end
           end
         end
+        count_jumps += 1
       end
       if player.isMachine
         return valid_canto
