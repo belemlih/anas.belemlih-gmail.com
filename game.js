@@ -1,4 +1,4 @@
-wiwindow.onload = function() {
+window.onload = function() {
 
   layout = document.getElementById("mainLayout");
   view = layout.getContext("2d");
@@ -12,9 +12,10 @@ wiwindow.onload = function() {
   var buttonW = 100;
   var buttonH = 160;
   var collection_card = cartas();
-  alert(collection_card[1]);
-  var dir = "collection_card/";
-  // id,palo,numero
+
+  //muestra las cartas boca abajo de los otros cartas_jugadores
+  //se envia el entorno de canvas mas la cantidad de cartas que tienen los otros jugadores jugador
+  cartas_jugadores(view, 5);
 
   //creacion de la imagen y colocacion de la imagen en el tablero.
   var img = new Image();
@@ -125,7 +126,7 @@ wiwindow.onload = function() {
 // la posicion se refiere al turno del jugador
 function putCard(posicion, collection_card, view) {
 
- if (posicion == 1) {
+  if (posicion == 1) {
     var img = new Image();
     img.src = 'Cartas/' + collection_card + '.jpg';
     img.onload = () => {
@@ -169,4 +170,39 @@ function cartas() {
   carta[6] = "11copas";
   carta[7] = "11oro";
   return carta;
+}
+
+// metodo que muestras las cartas boca abajo de los otros jugadores
+
+function cartas_jugadores(view, value) {
+  var x = 250;
+  var y = 50;
+  var z1 = 50;
+
+  for (let i = 0; i < 8; i++) {
+    var img1 = new Image();
+    img1.src = 'Cartas/reverso1.jpg';
+    img1.onload = () => {
+      view.drawImage(img1, x, 5, 60, 90);
+      x += 65;
+    };
+  }
+
+  for (let i = 0; i < 8; i++) {
+    var img3 = new Image();
+    img3.src = 'Cartas/reverso2.jpg';
+    img3.onload = () => {
+      view.drawImage(img3, 900, z1, 90, 50);
+      z1 += 55;
+    };
+  }
+
+  for (let i = 0; i < 8; i++) {
+    var img2 = new Image();
+    img2.src = 'Cartas/reverso2.jpg';
+    img2.onload = () => {
+      view.drawImage(img2, 10, y, 90, 50);
+      y += 55;
+    };
+  }
 }
