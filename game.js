@@ -3,7 +3,7 @@ window.onload = function() {
   layout = document.getElementById("mainLayout");
   view = layout.getContext("2d");
 
-  var heightScreen = (window.screen.height / 100) * 4;
+  var heightScreen = (window.screen.height / 100) * 1.9; //5
   var widthScrenn = (window.screen.width / 100) * 14.8;
 
   //alert(widthScrenn);
@@ -16,6 +16,8 @@ window.onload = function() {
   //muestra las cartas boca abajo de los otros cartas_jugadores
   //se envia el entorno de canvas mas la cantidad de cartas que tienen los otros jugadores jugador
   cartas_jugadores(view, 5);
+  //mostra_mensaje(view);
+  start(view);
 
   //creacion de la imagen y colocacion de la imagen en el tablero.
   var img = new Image();
@@ -59,8 +61,6 @@ window.onload = function() {
     view.drawImage(img7, 815, buttonY, buttonW, buttonH);
   };
 
-
-
   //validacion de posicion del jugador y movimiento de carta
   // por el momento solo se va a validr el movimiento de la cartas
   // ademas se valida  que no vuelva a lanzar otra carta, esto en el arreglo al sacar la carta
@@ -71,6 +71,8 @@ window.onload = function() {
     if (event.x > buttonX + widthScrenn && event.x < buttonX + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
       //clearRect remover posicion actual de la carta en el tablero
       view.clearRect(buttonX, buttonY, buttonW, buttonH);
+      borra_carta(view);
+      //view.clearRect(900, 50, 90, 50);
       //carta lanzada por el jugador
       putCard(1, collection_card[0], view);
 
@@ -205,4 +207,39 @@ function cartas_jugadores(view, value) {
       y += 55;
     };
   }
+}
+
+//borrar carta cartas_jugadores
+function borra_carta(view) {
+  var x = 250;
+  var y = 50;
+  var z1 = 50;
+  //view.clearRect(900, 50, 90, 50);
+  //view.clearRect(900, 50, 90, 50);
+
+  for (let i = 0; i < 2; i++) {
+    view.clearRect(900, z1, 90, 50);
+    z1 += 55;
+  }
+
+}
+
+function mostra_mensaje(view) {
+
+  view.font = "30px Comic Sans MS";
+  view.fillStyle = "red";
+  view.textAlign = "center";
+  view.fillText("Hello World",500,150, 150, 50);
+
+}
+
+function start(view) {
+  mostra_mensaje(view);
+  setTimeout(function() {
+    clear(view);
+  },2000);
+}
+
+function clear(view) {
+  view.clearRect(405,100, 205,50);
 }
