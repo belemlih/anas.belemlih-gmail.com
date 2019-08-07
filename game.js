@@ -1,167 +1,84 @@
 window.onload = function() {
 
-  layout = document.getElementById("mainLayout");
-  view = layout.getContext("2d");
+  var collection_card = loadCard();
+  cardPlayers();
+  paloTriunfo(collection_card);
 
-  var heightScreen = (window.screen.height / 100) * 1.9; //5
-  var widthScrenn = (window.screen.width / 100) * 14.8;
+  // add img to button
 
-  //alert(widthScrenn);
-  var buttonX = 80;
-  var buttonY = 535;
-  var buttonW = 100;
-  var buttonH = 160;
-  var collection_card = cartas();
+  var card1 = document.getElementById("button1");
+  card1.style.backgroundImage = "url('Cartas/" + collection_card[0] + ".jpg')";
+  document.getElementById("button1").style.backgroundSize = '100%';
 
-  //muestra las cartas boca abajo de los otros cartas_jugadores
-  //se envia el entorno de canvas mas la cantidad de cartas que tienen los otros jugadores jugador
-  cartas_jugadores(view, 5);
-  //mostra_mensaje(view);
-  start(view);
+  var card2 = document.getElementById("button2");
+  card2.style.backgroundImage = "url('Cartas/" + collection_card[1] + ".jpg')";
+  document.getElementById("button2").style.backgroundSize = '100%';
 
-  //creacion de la imagen y colocacion de la imagen en el tablero.
-  var img = new Image();
-  img.src = 'Cartas/' + collection_card[0] + '.jpg';
-  img.onload = () => {
-    view.drawImage(img, buttonX, buttonY, buttonW, buttonH);
-  };
-  const img1 = new Image();
-  img1.src = 'Cartas/' + collection_card[1] + '.jpg';
-  img1.onload = () => {
-    view.drawImage(img1, 185, buttonY, buttonW, buttonH);
-  };
-  const img2 = new Image();
-  img2.src = 'Cartas/' + collection_card[2] + '.jpg';
-  img2.onload = () => {
-    view.drawImage(img2, 290, buttonY, buttonW, buttonH);
-  };
-  const img3 = new Image();
-  img3.src = 'Cartas/' + collection_card[3] + '.jpg';
-  img3.onload = () => {
-    view.drawImage(img3, 395, buttonY, buttonW, buttonH);
-  };
-  const img4 = new Image();
-  img4.src = 'Cartas/' + collection_card[4] + '.jpg';
-  img4.onload = () => {
-    view.drawImage(img4, 500, buttonY, buttonW, buttonH);
-  };
-  const img5 = new Image();
-  img5.src = 'Cartas/' + collection_card[5] + '.jpg';
-  img5.onload = () => {
-    view.drawImage(img5, 605, buttonY, buttonW, buttonH);
-  };
-  const img6 = new Image();
-  img6.src = 'Cartas/' + collection_card[6] + '.jpg';
-  img6.onload = () => {
-    view.drawImage(img6, 710, buttonY, buttonW, buttonH);
-  };
-  const img7 = new Image();
-  img7.src = 'Cartas/' + collection_card[7] + '.jpg';
-  img7.onload = () => {
-    view.drawImage(img7, 815, buttonY, buttonW, buttonH);
-  };
+  var card3 = document.getElementById("button3");
+  card3.style.backgroundImage = "url('Cartas/" + collection_card[2] + ".jpg')";
+  document.getElementById("button3").style.backgroundSize = '100%';
 
-  //validacion de posicion del jugador y movimiento de carta
-  // por el momento solo se va a validr el movimiento de la cartas
-  // ademas se valida  que no vuelva a lanzar otra carta, esto en el arreglo al sacar la carta
-  layout.addEventListener('click', function(event) {
-    // Executes if button was clicked!&&event.y > buttonY &&event.y < buttonY + buttonH
-    //alert(event.x + " " + event.y);
-    alert(buttonX);
-    if (event.x > buttonX + widthScrenn && event.x < buttonX + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(buttonX, buttonY, buttonW, buttonH);
-      borra_carta(view);
-      //view.clearRect(900, 50, 90, 50);
-      //carta lanzada por el jugador
-      putCard(1, collection_card[0], view);
+  var card4 = document.getElementById("button4");
+  card4.style.backgroundImage = "url('Cartas/" + collection_card[3] + ".jpg')";
+  document.getElementById("button4").style.backgroundSize = '100%';
 
-    } else if (event.x > 185 + widthScrenn && event.x < 185 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(185, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(2, collection_card[1], view);
+  var card5 = document.getElementById("button5");
+  card5.style.backgroundImage = "url('Cartas/" + collection_card[4] + ".jpg')";
+  document.getElementById("button5").style.backgroundSize = '100%';
 
-    } else if (event.x > 290 + widthScrenn && event.x < 290 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(290, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(3, collection_card[2], view);
+  var card6 = document.getElementById("button6");
+  card6.style.backgroundImage = "url('Cartas/" + collection_card[5] + ".jpg')";
+  document.getElementById("button6").style.backgroundSize = '100%';
 
-    } else if (event.x > 395 + widthScrenn && event.x < 395 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(395, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(4, collection_card[3], view);
+  var card7 = document.getElementById("button7");
+  card7.style.backgroundImage = "url('Cartas/" + collection_card[6] + ".jpg')";
+  document.getElementById("button7").style.backgroundSize = '100%';
 
-    } else if (event.x > 500 + widthScrenn && event.x < 500 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(500, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(3, collection_card[4], view);
+  var card8 = document.getElementById("button8");
+  card8.style.backgroundImage = "url('Cartas/" + collection_card[7] + ".jpg')";
+  document.getElementById("button8").style.backgroundSize = '100%';
 
-    } else if (event.x > 605 + widthScrenn && event.x < 605 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(605, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(4, collection_card[5], view);
-
-    } else if (event.x > 710 + widthScrenn && event.x < 710 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(710, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(4, collection_card[6], view);
-
-    } else if (event.x > 815 + widthScrenn && event.x < 815 + buttonW + widthScrenn && event.y > buttonY + heightScreen && event.y < buttonY + buttonH + heightScreen) {
-      //clearRect remover posicion actual de la carta en el tablero
-      view.clearRect(815, buttonY, buttonW, buttonH);
-      //carta lanzada por el jugador
-      putCard(4, collection_card[7], view);
-
-    }
+  // eventos para activar el boton
+  card1.addEventListener("click", function() {
+    putCard(card1, 1, collection_card[0]);
   });
-
+  card2.addEventListener("click", function() {
+    putCard(card2, 2, collection_card[1]);
+  });
+  card3.addEventListener("click", function() {
+    putCard(card3, 3, collection_card[2]);
+  });
+  card4.addEventListener("click", function() {
+    putCard(card4, 4, collection_card[3]);
+  });
+  card5.addEventListener("click", function() {
+    putCard(card5, 1, collection_card[4]);
+  });
+  card6.addEventListener("click", function() {
+    putCard(card6, 2, collection_card[5]);
+  });
+  card7.addEventListener("click", function() {
+    putCard(card7, 3, collection_card[6]);
+  });
+  card8.addEventListener("click", function() {
+    putCard(card8, 4, collection_card[7]);
+  });
 }
 
-// metodo para mover la carta que el jugagor eligio
-// en este metodo ingresa la posicion del jugador,la carta y el entorno de canvas
-// la posicion se refiere al turno del jugador
-function putCard(posicion, collection_card, view) {
+// coloca el palo de triunfu
+function paloTriunfo(collection_card) {
 
-  if (posicion == 1) {
-    var img = new Image();
-    img.src = 'Cartas/' + collection_card + '.jpg';
-    img.onload = () => {
-      view.drawImage(img, 250, 250, 100, 160);
-    };
-  } else if (posicion == 2) {
-    var img = new Image();
-    img.src = 'Cartas/' + collection_card + '.jpg';
-    img.onload = () => {
-      view.drawImage(img, 360, 250, 100, 160);
-    };
-
-  } else if (posicion == 3) {
-    var img = new Image();
-    img.src = 'Cartas/' + collection_card + '.jpg';
-    img.onload = () => {
-      view.drawImage(img, 470, 250, 100, 160);
-    };
-
-  } else if (posicion == 4) {
-    var img = new Image();
-    img.src = 'Cartas/' + collection_card + '.jpg';
-    img.onload = () => {
-      view.drawImage(img, 580, 250, 100, 160);
-    };
-
-  }
-
-  //return img;
+  var trinfu = document.getElementById("button9");
+  trinfu.style.backgroundColor = "green";
+  trinfu.style.backgroundImage = "url('Cartas/" + collection_card[7] + ".jpg')";
+  trinfu.style.backgroundSize = '100%';
+  trinfu.style.top = "400px";
+  trinfu.style.left = "1080px";
 }
 
-function cartas() {
-  //accerder a la peticion para retornar los datos de la carta,visualizarlos y asignacion de collection_card
+
+// carga las cartas del jugador
+function loadCard() {
   var carta = new Array();
   carta[0] = "1bastos";
   carta[1] = "4espada";
@@ -174,72 +91,50 @@ function cartas() {
   return carta;
 }
 
-// metodo que muestras las cartas boca abajo de los otros jugadores
+// coloca las cartas boca abajo de los otro jugadores
+function cardPlayers() {
 
-function cartas_jugadores(view, value) {
-  var x = 250;
-  var y = 50;
-  var z1 = 50;
+  for (let i = 1; i <= 8; i++) {
+    document.getElementById("button1" + i).style.backgroundImage = "url('Cartas/reverso2.jpg')";
+    document.getElementById("button1" + i).style.backgroundSize = '98%';
 
-  for (let i = 0; i < 8; i++) {
-    var img1 = new Image();
-    img1.src = 'Cartas/reverso1.jpg';
-    img1.onload = () => {
-      view.drawImage(img1, x, 5, 60, 90);
-      x += 65;
-    };
-  }
+    document.getElementById("button2" + i).style.backgroundImage = "url('Cartas/reverso2.jpg')";
+    document.getElementById("button2" + i).style.backgroundSize = '98%';
 
-  for (let i = 0; i < 8; i++) {
-    var img3 = new Image();
-    img3.src = 'Cartas/reverso2.jpg';
-    img3.onload = () => {
-      view.drawImage(img3, 900, z1, 90, 50);
-      z1 += 55;
-    };
-  }
-
-  for (let i = 0; i < 8; i++) {
-    var img2 = new Image();
-    img2.src = 'Cartas/reverso2.jpg';
-    img2.onload = () => {
-      view.drawImage(img2, 10, y, 90, 50);
-      y += 55;
-    };
+    document.getElementById("button3" + i).style.backgroundImage = "url('Cartas/reverso1.jpg')";
+    document.getElementById("button3" + i).style.backgroundSize = '101%';
   }
 }
 
-//borrar carta cartas_jugadores
-function borra_carta(view) {
-  var x = 250;
-  var y = 50;
-  var z1 = 50;
-  //view.clearRect(900, 50, 90, 50);
-  //view.clearRect(900, 50, 90, 50);
+// coloca las cartas lanzadas
+//esta funcion recibe el boton,la posicion del jugador y la carta seleccionada
+function putCard(button, position, collection_card) {
 
-  for (let i = 0; i < 2; i++) {
-    view.clearRect(900, z1, 90, 50);
-    z1 += 55;
+  if (position == 1) {
+
+    button.style.backgroundColor = "green";
+    button.style.top = "400px";
+    button.style.backgroundImage = "url('Cartas/" + collection_card + ".jpg')";
+    button.style.left = "440px";
+
+  } else if (position == 2) {
+
+    button.style.backgroundColor = "green";
+    button.style.top = "400px";
+    button.style.backgroundImage = "url('Cartas/" + collection_card + ".jpg')";
+    button.style.left = "600px";
+
+  } else if (position == 3) {
+
+    button.style.backgroundColor = "green";
+    button.style.top = "400px";
+    button.style.backgroundImage = "url('Cartas/" + collection_card + ".jpg')";
+    button.style.left = "760px";
+
+  } else if (position == 4) {
+    button.style.backgroundColor = "green";
+    button.style.top = "400px";
+    button.style.backgroundImage = "url('Cartas/" + collection_card + ".jpg')";
+    button.style.left = "920px";
   }
-
-}
-
-function mostra_mensaje(view) {
-
-  view.font = "30px Comic Sans MS";
-  view.fillStyle = "red";
-  view.textAlign = "center";
-  view.fillText("Hello World",500,150, 150, 50);
-
-}
-
-function start(view) {
-  mostra_mensaje(view);
-  setTimeout(function() {
-    clear(view);
-  },2000);
-}
-
-function clear(view) {
-  view.clearRect(405,100, 205,50);
 }
